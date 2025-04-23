@@ -1,0 +1,137 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Арт-Строй Проект</title>
+    <link rel="stylesheet" href="./css/styles1.css">
+    <link rel="website icon" type="png"
+    href="./jpg/изображение_2025-04-18_145257872.png">
+</head>
+<body>
+    <header>
+        <div>
+            <div class="bar"></div>
+            <a href="./main1.html"><img class="logo" src="./jpg/изображение_2025-04-18_145257872.png"></a>
+            <h3 class="header-contacts">(862) 264-84-33</h3>
+            <h3 class="header-contacts">info@artstroyproekt.com</h3>
+        </div>
+
+        <div>
+            <nav class="navbar">
+                <ul>
+                <li><a href="./main2.html">О компании</a></li>
+                <li><a href="./main7.html">Наши проекты</a></li>
+                <li><a href="./main3.html">Задать вопрос</a></li>
+                <li><a href="./main6.html">Сертификаты</a></li>
+                <li><a href="./main4.html">Контакты</a></li>
+                <li><a href="./main5.html">Услуги</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container-form-main">
+
+        <div class="container-form">
+            <h1>Свяжитесь с нами</h1>
+            <form id="contactForm">
+                <label for="name">Имя:</label>
+                <input type="text" id="name" name="name" required>
+    
+                <label for="phone">Номер телефона:</label>
+                <input type="text" id="number" name="number" required>
+    
+                <label for="email">Электронная почта:</label>
+                <input type="email" id="email" name="email" required>
+    
+                <label for="question">Ваш вопрос:</label>
+                <textarea class="text-question" id="question" name="question" rows="1" required></textarea>
+    
+                <input class="button-form-input" type="submit" value="Отправить">
+            </form>
+
+            <div id="messageContainer"></div>
+        
+            <script>
+                document.getElementById('contactForm').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const formData = {
+                        name: e.target.name.value,
+                        number: e.target.number.value,
+                        email: e.target.email.value,
+                        question: e.target.question.value
+                    };
+                
+                    try {
+                        const response = await fetch('http://localhost:3000/submit', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(formData)
+                        });
+                
+                        const result = await response.json();
+                        
+                        if (response.ok) {
+                            showMessage('success', 'Сообщение успешно отправлено!');
+                            e.target.reset();
+                        } else {
+                            showMessage('error', result.error || 'Ошибка сервера');
+                        }
+                    } catch (error) {
+                            console.error('Ошибка:', error);
+                            showMessage('error', `Ошибка: ${error.message}`);
+                    }
+                });
+                
+                function showMessage(type, text) {
+                    const container = document.getElementById('messageContainer');
+                    container.innerHTML = `<div class="${type}-message">${text}</div>`;
+                    setTimeout(() => container.innerHTML = '', 5000);
+                }
+                </script>
+
+        </div>
+
+       
+
+        <script src="./script.js"></script>
+        
+    </main>
+
+    <footer class="footer-company">
+        <div class="footer-container">
+            <div class="logo-container">
+                <img src="./jpg/изображение_2025-04-18_152733728.png" alt="Логотип компании">
+            </div>
+            <nav class="footer-menu">
+                <p>Меню</p>
+                <ul>
+                    <li><a href="./main2.html">О Компании</a></li>
+                    <li><a href="./main7.html">Наши проекты</a></li>
+                    <li><a href="./main3.html">Задать вопрос</a></li>
+                    <li><a href="./main6.html">Сертификаты</a></li>
+                    <li><a href="./main4.html">Контакты</a></li>
+                    <li><a href="./main5.html">Услуги</a></li>
+                </ul>
+            </nav>
+            <div class="contacts">
+                <p>Контакты</p>
+                <p>Телефон: (862) 264-84-33</p>
+                <p>Email: info@artstroyproekt.com</p>
+                <p>Адрес: ул. Стачки, д. 348, г. Ростов-на-Дону</p>
+            </div>
+            <div class="map">
+                <p>Где нас найти</p>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d677.5774236869189!2d39.59727446967932!3d47.210522309218554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40e3bf4294666ae7%3A0x2d1ba2455319525f!2z0L_RgC4g0KHRgtCw0YfQutC4LCAzNDgsINCg0L7RgdGC0L7Qsi3QvdCwLdCU0L7QvdGDLCDQoNC-0YHRgtC-0LLRgdC60LDRjyDQvtCx0LsuLCAzNDQwMDQ!5e0!3m2!1sru!2sru!4v1745254885525!5m2!1sru!2sru" width="300" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+            <div class="line-foot"></div>
+                <div class="footer-bottom">
+                    <p>ООО "Арт-Строй Проект" © 2025. Все права защищены.</p>
+                </div>
+    </footer>
+</body>
+</html>
