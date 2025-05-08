@@ -10,30 +10,89 @@
 <body>
     <header>
         <div>
-            <div class="bar"></div>
-            <a href="./main1.html"><img class="logo" src="./jpg/изображение_2025-04-18_145257872.png"></a>
-            <h3 class="header-contacts">(862) 264-84-33</h3>
-            <h3 class="header-contacts">info@artstroyproekt.com</h3>
-        </div>
+            <div>
+                <div class="bar"></div>
+                <a href="./main1.html"><img class="logo" src="./jpg/изображение_2025-04-18_1452578721.png"></a>
+                <h3 class="header-contacts" onclick="copyToClipboard(this)">
+                    (862) 264-84-33
+                    <span class="copy-feedback"></span>
+                </h3>
+                <h3 class="header-contacts" onclick="copyToClipboard(this)">
+                    info@artstroyproekt.com
+                    <span class="copy-feedback"></span>
+                </h3>
+            </div>
 
-        <div>
-            <nav class="navbar">
-                <ul>
-                <li><a href="./main2.html">О компании</a></li>
-                <li><a href="./main7.html">Наши проекты</a></li>
-                <li><a href="./main3.html">Задать вопрос</a></li>
-                <li><a href="./main6.html">Сертификаты</a></li>
-                <li><a href="./main4.html">Контакты</a></li>
-                <li><a href="./main5.html">Услуги</a></li>
-                </ul>
-            </nav>
+            <script>
+                function copyToClipboard(element) {
+                    const text = element.childNodes[0].textContent.trim();
+                    const feedback = element.querySelector('.copy-feedback');
+                    
+                    navigator.clipboard.writeText(text).then(() => {
+                        feedback.textContent = ' ✓ Скопировано!';
+                        setTimeout(() => feedback.textContent = '', 2000);
+                    }).catch(err => {
+                        console.error('Ошибка копирования:', err);
+                        feedback.textContent = ' ✗ Ошибка!';
+                        setTimeout(() => feedback.textContent = '', 2000);
+                    });
+                }
+                </script>
+
+            <div>
+                <nav class="navbar">
+                    <div class="burger">
+                        <div class="burger-line"></div>
+                        <div class="burger-line"></div>
+                        <div class="burger-line"></div>
+                    </div>
+
+                    <ul>
+                        <li><a href="./main2.html">О компании</a></li>
+                        <li><a href="./main7.html">Наши проекты</a></li>
+                        <li><a href="./main3.html">Задать вопрос</a></li>
+                        <li><a href="./main6.html">Сертификаты</a></li>
+                        <li><a href="./main4.html">Контакты</a></li>
+                        <li><a href="./main5.html">Услуги</a></li>
+                    </ul>
+                </nav> 
+            </div>
+
+            <script>document.addEventListener('DOMContentLoaded', () => {
+                const burger = document.querySelector('.burger');
+                const navList = document.querySelector('.navbar ul');
+                
+                // Открытие/закрытие меню
+                burger.addEventListener('click', () => {
+                    navList.classList.toggle('active');
+                    burger.classList.toggle('active');
+                });
+            
+                // Закрытие меню при клике на ссылку
+                document.querySelectorAll('.navbar a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navList.classList.remove('active');
+                        burger.classList.remove('active');
+                    });
+                });
+            
+                // Закрытие меню при клике вне области
+                document.addEventListener('click', (e) => {
+                    if (!e.target.closest('.navbar') && navList.classList.contains('active')) {
+                        navList.classList.remove('active');
+                        burger.classList.remove('active');
+                    }
+                });
+            });
+            </script>
+
         </div>
     </header>
 
     <main class="container-form-main">
 
         <div class="container-form">
-            <h1>Свяжитесь с нами</h1>
+            <h1 class="form-question">Свяжитесь с нами</h1>
             <form id="contactForm">
                 <label for="name">Имя:</label>
                 <input type="text" id="name" name="name" required>
