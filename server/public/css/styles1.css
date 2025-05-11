@@ -20,20 +20,27 @@ body {
     background-attachment: fixed;
 }
 
+h1 {
+    font-size: 3vw;
+    text-align: center;
+    margin-bottom: 5%;
+    margin-top: 5%;
+    color: #FFF;
+}
+
 .logo {
     position: relative;
+    display: flex;
     z-index: 1;
-    max-width: 20%;
     width: 18%;
-    height: 15%;
-    margin-left: 18%;
+    height: auto;
 }
 
 .bar {
     width: 100%;
     max-width: 100%;
-    max-height: 40%;
-    height: 19%;
+    height: 15%;
+    max-height: 15%;
     background-color: #dae4ff;
     position: absolute;
     opacity: 0.8;
@@ -45,10 +52,11 @@ body {
     font-size: 1vw;
     cursor: pointer;
     position: relative;
+    display: flex;
     transition: color 0.3s;
-    margin-left: 70%;
-    margin-top: -1%;
-    margin-bottom: 1%;
+    margin-left: 85%;
+    margin-top: -2.5%;
+    margin-bottom: 0%;
 }
 
 .header-contacts:hover {
@@ -65,7 +73,6 @@ body {
 
 .burger {
     position: absolute;
-    margin-top: 10%;
     display: none;
     cursor: pointer;
     z-index: 1000;
@@ -87,13 +94,13 @@ body {
 .navbar ul {
     display: flex;
     justify-content: center;
-    gap: 4rem;
+    gap: 2.5rem;
     list-style: none;
-    padding: 1rem 0;
+    
 }
 
 .navbar a {
-    color: #ffffff;
+    color: #1a1818;
     font-size: 1.5vw;
     text-decoration: none;
     transition: color 0.3s;
@@ -108,20 +115,12 @@ body {
     margin-top: var(--section-margin);
 }
 
-.company, .company2, .friend, .contacts-cont, .sertificat, .Company-derector, .company-str, .form-question {
+.company, .company2, .project, .projects, .friend, .services, .contacts-cont, .sertificat, .Company-derector, .company-str, .form-question {
     font-size: 3vw;
     text-align: center;
     margin-bottom: 5%;
     margin-top: 5%;
     color: #FFF;
-}
-
-.project {
-    font-size: 3vw;
-    text-align: center;
-    color: #ffffff;
-    position: relative;
-    margin-top: 5%;
 }
 
 .company-first{
@@ -139,10 +138,9 @@ body {
     border-radius: 1vw;
 }
 
-
 .company-info{
     font-size: 1.5vw;
-    max-width: 40%;
+    max-width: 100%;
     width: 33%;
     position: absolute;
     margin-left: 15%;
@@ -152,7 +150,6 @@ body {
 
 .company-info2{
     font-size: 1.5vw;
-    max-width: 100%;
     width: 33%;
     position: absolute;
     margin-left: 35%;
@@ -195,7 +192,6 @@ body {
 }
 
 .Company-img1{
-    max-width: 40%;
     width: 30%;
     position: absolute;
     margin-left: 49%;
@@ -205,7 +201,6 @@ body {
 }
 
 .Company-img2{
-    max-width: 40%;
     width: 30%;
     position: absolute;
     margin-left: 2%;
@@ -259,8 +254,6 @@ body {
 
 }
 
-
-
 .container1 {
     max-width: 60%;
     margin: 0 auto;
@@ -302,56 +295,6 @@ body {
     background-color: #0056b3;
 }
 
-/* Адаптивность для мобильных устройств */
-@media (max-width: 768px) {
-    
-    
-    .container-infoP {
-        width: 100%;
-        text-align: center;
-        padding: 0.7rem;
-    }
-}
-
-/* Версия для планшетов и десктопа */
-@media (min-width: 769px) {
-    .container1 {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
-    }
-    
-    .container1 > * {
-        grid-column: 1/-1;
-    }
-    
-    /* Для правильного расположения элементов в сетке */
-    .container-img1,
-    .container-img2,
-    .container-img3 {
-        grid-row: auto;
-    }
-    
-    .container1 p,
-    .container-infoP {
-        grid-column: auto;
-    }
-}
-
-@media (min-width: 769px) {
-    .container1 {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    
-    .project-card {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-    }
-}
-
-
-
 footer {
     background-color: #b9b9b9;
     padding: 2rem;
@@ -376,106 +319,14 @@ footer {
     font-size: 1vw;
 }
 
-
-
 .footer-bottom {
     text-align: center;
     font-size: 1vw;
 }
 
-@media (max-width: 1200px) {
-    .navbar ul {
-        gap: 2rem;
-    }
-
-
-
-}
-
-@media (max-width: 768px) {
-    .logo {
-        margin-left: 18%;
-    }
-    
-    .navbar {
-        margin-left: 2rem;
-    }
-    
-    .company, .company2 {
-        margin-left: 2rem;
-        font-size: 1.5vw;
-    }
-    
-
-    
-    .Company-img1, .Company-img2 {
-        position: static;
-        width: 90%;
-        transform: none;
-    }
-
-    .company-info, .company-info2 {
-        max-width: 90%;
-        margin-left: 2rem;
-        margin-bottom: 100%;
-    }
-
-    .burger {
-        display: block;
-        position: fixed;
-        right: 20px;
-        transform: translateY(-50%);
-        top: 150px;
-        
-    }
-
-    .navbar ul {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        height: 100vh;
-        width: 70%;
-        background: rgba(0, 0, 0, 0.9);
-        flex-direction: column;
-        justify-content: center;
-        gap: 2rem;
-        padding: 20px;
-        transition: right 0.5s ease;
-        z-index: 999;
-    }
-
-    .navbar a {
-        font-size: 1.2rem;
-    }
-
-    /* Анимация бургера */
-    .burger.active .burger-line:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
-    }
-
-    .burger.active .burger-line:nth-child(2) {
-        opacity: 0;
-    }
-
-    .burger.active .burger-line:nth-child(3) {
-        transform: rotate(-45deg) translate(7px, -6px);
-    }
-
-    /* Активное состояние меню */
-    .navbar ul.active {
-        right: 0;
-    }
-}
-
-
-
 img {
     max-width: 100%;
     height: auto;
-}
-
-h1, h2, h3 {
-    line-height: 1.2;
 }
 
 .success-message {
@@ -539,7 +390,6 @@ button:hover {
     background-color: #218838;
 }
 
-
 .text-question {
     margin-left: 25%;
     width: 50%;
@@ -581,8 +431,6 @@ button:hover {
     margin-left: 27%;
 }
 
-
-
 .left-line-company {
     max-width: 100%;
     width: 60%; 
@@ -622,12 +470,11 @@ button:hover {
     
 } 
 
-
 .container-member {
     background-color: white;
     padding: 1%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     gap: 2rem;
     max-width: 80%;
     margin: 0 auto;
@@ -657,16 +504,6 @@ button:hover {
     font-size: 0.8vw;
 }
 
-/* Адаптивность */
-@media (max-width: 768px) {
-    .container-member {
-        grid-template-columns: 1fr;
-        padding: 5%;
-    }
-    
-
-}
-
 .sertificat-box {
     max-width: 80%;
     width: 60%;
@@ -675,18 +512,6 @@ button:hover {
     gap: 1%;
     margin-left: 20%;
     align-content: center;
-}
-
-@media (max-width: 768px) {
-    .sertificat-box {
-    grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 576px) {
-    .sertificat-box {
-        grid-template-columns: repeat(1, 1fr);
-        }
 }
 
 .contact p {
@@ -701,14 +526,302 @@ button:hover {
     margin-left: 20%;
 }
 
-@media (max-width: 768px){
-    .map-section  {
-        width: 100%;
-    }
+.services-box {
+    background: white;
+    padding: 30px;
+    max-width: 70%;
+    margin: 20px auto;
+    display: flex;
+    border-radius: 1vw;
 }
 
-@media (max-width: 576px){
-    .map-section  {
-        width: 100%;
-    }
+.services-text-left {
+    width: 48%;
+    float: left;
+    padding-right: 4%;
+    color: #000000;
+    font-family: var(--main-font);
+    font-size: 1.5vw;
 }
+
+.services-text-right {
+    width: 48%;
+    float: right;
+    padding-left: 4%;
+    color: #000000;
+    font-family: var(--main-font);
+    font-size: 1.5vw;
+}
+
+.line-one {
+    clear: both;
+    color: #000000;
+    width: 1%;
+    height: 100%;
+    z-index: 999;
+    position: absolute;
+}
+
+.line-two {
+    clear: both;
+    height: 2px;
+    background: #ddd;
+    margin: 40px 0;
+    border: 0;
+}
+
+.services-text-right {
+    list-style: none;
+    padding-left: 25px;
+}
+
+.services-text-compl-work {
+    list-style: none;
+    padding-left: 25px;
+    font-family: var(--main-font);
+    font-size: 1.5vw;
+    color: #FFF;
+}
+
+.services-text-right li,
+.services-text-compl-work li {
+    margin-bottom: 15px;
+    position: relative;
+    padding-left: 25px;
+}
+
+.services-text-right li::before,
+.services-text-compl-work li::before {
+    content: "▹";
+    color: #0077cc;
+    position: absolute;
+    left: 0;
+}
+
+.services-text-compl-work {
+    clear: both;
+    padding-top: 20px;
+    column-count: 2;
+    column-gap: 40px;
+}
+
+.services-text-compl-work > li {
+    break-inside: avoid;
+}
+
+.projects-box p {
+    font-family: var(--main-font);
+    font-size: 1.5vw;
+    text-align: center;
+    color: #FFF;
+}
+
+.projects-box img {
+    max-width: 100%;
+    width: 20%;
+    margin-left: 8%;
+    margin-top: 3%;
+    margin-bottom: 2%;
+}
+
+.project-name {
+    font-size: 1.8vw;
+    color: #dadada;
+    text-align: center;
+}
+
+/* --- 1200px и меньше: планшеты, небольшие ноутбуки --- */
+@media (max-width: 1200px) {
+    .logo { width: 20%; height: 10%;  }
+    .bar {height: 11%;}
+    .navbar ul { gap: 1.5rem; margin-left: 4%;}
+    .company-info{ font-size: 2vw; margin-left: 5%; }
+    .company-info2 { font-size: 2vw; margin-left: 45%;}
+    .infoP { margin-top: 35%; margin-left: 5%; font-size: 1.5vw;}
+    .infoP2 { margin-top: 35%; margin-left: 45%; font-size: 1.5vw;}
+    .Company-img1 { width: 37%; margin-top: 7%; margin-left: 40%;}
+    .Company-img2 { width: 40%; margin-top: 5%; margin-left: 2%;}
+    .container1 p { font-size: 2vw;}
+    .container-infoP {font-size: 1.5vw;}
+    .logo-container { width: 50%;}
+    .footer-menu, .contacts, .map {margin-top: 1%;}
+    .footer-container { 
+        font-size: 1.5vw; display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 2rem;
+        max-width: 100%;}
+    .footer-bottom {font-size: 1.5vw;margin-top: 2%;}
+    .block-company p {font-size: 2vw;}
+    .left-line-company {margin-top: 22%;}
+    .left-line-company2 {margin-top: 27%;}
+    .right-line-company {margin-top: 22%;}
+    .team-member h2{font-size: 2vw;}
+    .team-member p{font-size: 1.2vw;}
+    .friend-box-color {height: 22%;}
+  }
+  
+  /* --- 768px и меньше: планшеты, крупные смартфоны --- */
+@media (max-width: 768px) {
+    .logo { width: 38%; height: auto; margin-left: 5%; }
+    .bar { height: 20%; }
+    .header-contacts { display: none; }
+    .burger { display: block; right: 20px; top: 80px; }
+    .burger.active .burger-line:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    .burger.active .burger-line:nth-child(2) {
+        opacity: 0;
+    }
+    .burger.active .burger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
+    .navbar ul.active {
+        right: 0;
+    }
+    .navbar ul {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.9);
+        flex-direction: column;
+        justify-content: center;
+        gap: 2rem;
+        padding: 20px;
+        transition: right 0.5s;
+        z-index: 999;
+    }
+    .navbar ul.active { right: 0; }
+    .navbar a { font-size: 5vw; color: #FFF;}
+    .company, .company2, .project, .friend, .services, .contacts-cont, .sertificat, .Company-derector, .company-str, .form-question { font-size: 5vw; }
+    .company-info, .company-info2 {
+        position: static;
+        width: 92%;
+        margin: 2% auto;
+        font-size: 3vw;
+    }
+    .Company-img1, .Company-img2 {
+        position: static;
+        width: 90%;
+        margin: 2% auto;
+        font-size: 3vw;
+        margin-left: 2%;
+    }
+    .company-first{
+        width: 95%;
+        height: 82%;
+        margin-left: 2.5%;
+        border-radius: 2vw;
+    }
+    .company-second {
+        width: 95%;
+        height: 85%;
+        margin-left: 2.5%;
+        border-radius: 2vw;
+    }
+    .infoP {margin-top: 0%; font-size: 3vw; margin-left: 4%;}
+    .infoP2 {margin-top: 0%; margin-left: 4%; font-size: 3vw;}
+    .section-box-project{
+        max-width: 95%;
+        margin-left: 2.5%;
+        border-radius: 3vw;
+    }
+    .friend-box-color {max-width: 60%; margin-left: 20%; height: 18%;}
+    .friend-box img {width: 100%;}
+    .container1 { flex-direction: column; gap: 1rem; }
+    .project-card p {font-size: 3vw;}
+    .container-infoP {font-size: 3vw;}
+    .logo-container { width: 90%;}
+    .footer-container { 
+        font-size: 2.2vw; display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(25px, 1fr));
+        gap: 2rem;
+        max-width: 100%;}
+    .footer-bottom {font-size: 2vw; margin-top: 5%;}
+    .block-company p {font-size: 3vw;}
+    .left-text-company-algin-box {width: 95%; margin-left: 0%;}
+    .right-text-company-algin-box {width: 95%; margin-left: 5%;}
+    .left-line-company {margin-top: 32%;}
+    .left-line-company2 {margin-top: 37%;}
+    .right-line-company {margin-top: 32%;}
+    .team-member h2 { font-size: 3vw; }
+    .team-member p { font-size: 2vw; }
+    .container-member { grid-template-columns: 1fr; padding: 5%; }
+    .project-name {font-size: 3vw;}
+    .projects-box p {font-size: 2vw;}
+    .projects-box img {width: 24%; }
+    .contact p {font-size: 3vw;}
+    .sertificat-box { grid-template-columns: repeat(2, 1fr); }
+    .map-section { width: 100%; margin-left: 20%; }
+    .services-box { flex-direction: column; padding: 20px; max-width: 95%; }
+    .services-text-left, .services-text-right { width: 100% !important; float: none; padding: 0 !important; margin-bottom: 25px; font-size: 3vw; }
+    .services-text-compl-work { column-count: 1; font-size: 3vw;}
+    label, input, textarea, .button-form-input, .text-question {
+        font-size: 2vw !important;
+        width: 90% !important;
+        margin-left: 5% !important;
+    }
+  }
+  
+  /* --- 576px и меньше: смартфоны --- */
+@media (max-width: 576px) {
+    .logo { width: 50%; margin-left: 0; }
+    .company, .projects, .company2, .project, .friend, .services, .contacts-cont, .sertificat, .Company-derector, .company-str, .form-question { font-size: 7vw; }
+    .company-info, .company-info2, .Company-img1, .Company-img2, .infoP, .infoP2 { width: 90%; margin-left: 5%; margin-top: 3%; font-size: 4vw; }
+    .company-first, .company-second { width: 100%; margin-left: 0; border-radius: 4vw; }
+    .section-box-project, .friend-box-color { max-width: 80%; margin-left: 10%; border-radius: 5vw; }
+    .footer-container { font-size: 2vw; }
+    .team-member h2 { font-size: 4vw; }
+    .team-member p { font-size: 2vw; }
+    .sertificat-box { grid-template-columns: 1fr; margin-top: 10%; }
+    .container1 p, .container-infoP { font-size: 4vw; }
+    .logo-container {width: 100%;}
+    .friend-box-color {max-width: 100%; width: 100%; margin-left: 0; border-radius: 0;}
+    .friend-box img {margin-left: 90%; width: 120%; max-width: 150%;}
+    label, input, textarea, .button-form-input, .text-question {
+        font-size: 3vw !important;
+        width: 90% !important;
+        margin-left: 5% !important;
+    }
+    .block-company p {font-size: 4vw;}
+    .left-text-company-algin-box {width: 100%; margin-left: 0%;}
+    .right-text-company-algin-box {width: 100%; margin-left: 0%;}
+    .left-line-company {margin-top: 41%;}
+    .left-line-company2 {margin-top: 47%;}
+    .right-line-company {margin-top: 42%;}
+    .project-name {font-size: 4vw;}
+    .projects-box p {font-size: 3vw;}
+    .projects-box img {width: 50%; margin-left: 25%; }
+    .projects-box {padding: 5px 5px 5px 5px;}
+    .map iframe {width: 100%; height: 70%;}
+    .services-text-left {font-size: 4vw;}
+    .services-text-right {font-size: 4vw;}
+    .services-text-compl-work {font-size: 4vw;}
+  }
+
+  /* --- 375px смартфоны --- */
+@media (max-width: 375px) {
+    .company, .projects, .company2, .project, .friend, .services, .contacts-cont, .sertificat, .Company-derector, .company-str, .form-question { font-size: 9vw; margin-top: 7%; margin-bottom: 7%; }
+    .burger {top: 50px;}
+    .friend {display: none;}
+    .friend-box {display: none;}
+    .friend-box-color {display: none;}
+    .map p {margin-left: 10%;}
+    .map iframe {width: 100%; height: 60%; margin-left: 10%;}
+    .footer-bottom {margin-top: 0; margin-bottom: 0;}
+    .left-text-company-algin-box {width: 100%; margin-left: 0%;}
+    .right-text-company-algin-box {width: 100%; margin-left: 0%;}
+    .left-line-company {display: none;}
+    .left-line-company2 {display: none;}
+    .right-line-company {display: none;}
+    .block-company p {font-size: 4.5vw;}
+    .team-member h2 { font-size: 5vw; }
+    .team-member p { font-size: 3vw; }
+    .logo-container {display: none;}
+    .footer-container { font-size: 3vw; }
+    .footer-bottom {font-size: 3vw;}
+    .project-name {font-size: 5vw;}
+    .projects-box p {font-size: 4vw;}
+}
+  
