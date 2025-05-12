@@ -14,7 +14,7 @@ body {
     font-family: var(--main-font);
     min-height: 100vh;
     overflow-x: hidden;
-    background-image: url(../jpg/8b87d3212e5207e16ae07d982fc2ea7b.jpg);
+    background-image: url(./jpg/8b87d3212e5207e16ae07d982fc2ea7b.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -37,7 +37,6 @@ img {
     display: flex;
     z-index: 1;
     width: 18%;
-    height: auto;
 }
 
 .bar {
@@ -829,7 +828,7 @@ animation-fill-mode: both;
   /* --- 576px и меньше: смартфоны --- */
 @media (max-width: 576px) {
     .logo { width: 50%; margin-left: 0; }
-    .company, .projects, .company2, .project, .friend, .services, .contacts-cont, .sertificat, .Company-derector, .company-str, .form-question { font-size: 7vw; }
+    .Company, .projects, .Company2, .project, .friend, .services, .contacts-cont, .sertificat, .Company-derector, .company-str, .form-question { font-size: 7vw; }
     .company-info, .company-info2, .Company-img1, .Company-img2, .infoP, .infoP2 { width: 90%; margin-left: 5%; margin-top: 3%; font-size: 4vw; }
     .company-first, .company-second { width: 100%; margin-left: 0; border-radius: 4vw; }
     .section-box-project, .friend-box-color { max-width: 80%; margin-left: 10%; border-radius: 5vw; }
@@ -864,10 +863,15 @@ animation-fill-mode: both;
     .map-section { width: 80%; margin-left: 20%; }
   }
 
+@media(max-width: 426px) {
+    .bar {height: 13%;}
+    .burger {margin-top: -5%;}
+}
+
   /* --- 375px смартфоны --- */
 @media (max-width: 376px) {
     .Company, .projects, .Company2, .project, .friend, .services, .contacts-cont, .sertificat, .Company-derector, .company-str, .form-question { font-size: 9vw; margin-top: 7%; margin-bottom: 7%; }
-    .burger {top: 50px;}
+    .burger {top: 60px;}
     .bar {height: 10%;}
     .map p {display: none;}
     .map iframe {display: none;}
