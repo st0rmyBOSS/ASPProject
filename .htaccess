@@ -1,0 +1,17 @@
+RewriteEngine On
+
+RewriteCond %{THE_REQUEST} /index\.html [NC]
+RewriteRule ^(.*?)index\.html$ /$1 [L,R=301,NC]
+
+RewriteRule ^$ index.html [L]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html [NC,L]
+
+RewriteRule ^о-компании$ index-page-about-company.html [NC,L]
+RewriteRule ^наши-проекты$ index-page-project.html [NC,L]
+RewriteRule ^задать-вопрос$ index-page-question.html [NC,L]
+RewriteRule ^сертификаты$ index-page-sertificat.html [NC,L]
+RewriteRule ^контакты$ index-page-contacts.html [NC,L]
+RewriteRule ^услуги$ index-page-services.html [NC,L]
