@@ -28,6 +28,10 @@ h1 {
     color: #FFF;
 }
 
+img {
+    max-width: 100%;
+}
+
 .logo {
     position: relative;
     display: flex;
@@ -48,15 +52,13 @@ h1 {
 }
 
 .header-contacts {
-    max-width: 100%;
     font-size: 1vw;
     cursor: pointer;
-    position: relative;
     display: flex;
     transition: color 0.3s;
-    margin-left: 85%;
-    margin-top: -2.5%;
-    margin-bottom: 0%;
+    margin-left: 83%;
+    margin-top: -3%;
+    margin-bottom: 3%;
 }
 
 .header-contacts:hover {
@@ -64,8 +66,6 @@ h1 {
 }
 
 .copy-feedback {
-    position: absolute;
-    margin-left: 10px;
     font-size: 0.8em;
     opacity: 0.8;
     transition: opacity 0.3s;
@@ -89,6 +89,7 @@ h1 {
 .navbar {
     justify-items: center;
     align-items: center;
+    margin-top: -5%;
 }
 
 .navbar ul {
@@ -125,42 +126,42 @@ h1 {
 
 .company-first{
     background-color: #FFF;
-    width: 80%;
-    height: 55%;
+    width: 75%;
     border-radius: 1vw;
+    padding: 50px 0 50px 0;
 }
 
 .company-second{
     background-color: #FFF;
     margin-left: 20%;
     width: 80%;
-    height: 56%;
     border-radius: 1vw;
+    padding: 50px 0 50px 0;
 }
 
 .company-info{
     font-size: 1.5vw;
     max-width: 100%;
     width: 33%;
-    position: absolute;
+    margin-top: -28%;
+    margin-bottom: 2%;
     margin-left: 15%;
-    margin-top: 5%;
     line-height: 1.5;
 }
 
 .company-info2{
+    max-width: 100%;
     font-size: 1.5vw;
     width: 33%;
-    position: absolute;
     margin-left: 45%;
-    margin-top: 3%;
+    margin-top: -28%;
     line-height: 1.5;
+    margin-bottom: 2%;
 }
 
 .infoP {
-    position: absolute;
+    margin-top: 10%;
     margin-left: 15%;
-    margin-top: 29%;
     font-size: 1.5vw;
     border-radius: 1vw;
     text-decoration: underline;
@@ -175,9 +176,9 @@ h1 {
 }
 
 .infoP2 {
-    position: absolute;
+
     margin-left: 45%;
-    margin-top: 33%;
+    margin-top: 35%;
     font-size: 1.5vw;
     border-radius: 1vw;
     text-decoration: underline;
@@ -193,16 +194,14 @@ h1 {
 
 .Company-img1{
     width: 40%;
-    position: absolute;
-    margin-left: 50%;
-    margin-top: 5%;
+    margin-left: 55%;
+    margin-top: 4%;
     border-radius: 1vw;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 .Company-img2{
     width: 40%;
-    position: absolute;
     margin-left: 2%;
     margin-top: 4%;
     border-radius: 1vw;
@@ -213,9 +212,8 @@ h1 {
     width: 100%; 
     height: 0.1%; 
     background-color: #ffffff; 
-    position: relative;
-    display: flex;
-    margin-top: 10%;
+    position: absolute;
+    margin-top: 2%;
     z-index: 1;
 }
 
@@ -224,19 +222,20 @@ h1 {
 }
 
 .friend-box {
-    max-width: 950px;
-    margin-left: 5%;
-    position: absolute;
-    width: 10%;
+    max-width: 100%;
+    margin-left: 15%;
+    width: 20%;
     height: 10%;
     display: flex;
     align-items: center;
     justify-items: center;
-    gap: 100%;
-    margin-top: 5%;
+    gap: 50%;
+    padding: 1% 1% 1% 1%;
 }
 
+
 .friend-box-color {
+    position: static;
     background-color: #FFF;
     max-width: 60%;
     margin-left: 20%;
@@ -324,9 +323,10 @@ footer {
     font-size: 1vw;
 }
 
-img {
-    max-width: 100%;
-    height: auto;
+.map iFrame {
+    margin-top: 10%;
+    width: 100%;
+    height: 70%;
 }
 
 .success-message {
@@ -405,11 +405,9 @@ button:hover {
 
 .left-text-company-algin-box {
     width: 60%;
-    height: 30%;
     background-color: #FFF;
     border-radius: 5vw;
-    display: flex;
-    align-items: center;
+    padding: 3% 3% 3% 3%;
     margin-top: 5%;
     margin-bottom: 5%;
     margin-left: 10%;
@@ -425,8 +423,7 @@ button:hover {
     width: 60%;
     height: 30%;
     background-color: #FFF;
-    display: flex;
-    align-items: center;
+    padding: 3% 3% 3% 3%;
     border-radius: 5vw;
     margin-left: 27%;
 }
@@ -440,7 +437,7 @@ button:hover {
     z-index: 1;
     border-radius: 5vw;
     margin-left: 10%;
-    margin-top: 14%;
+    margin-top: 11%;
     
 }
 
@@ -466,7 +463,20 @@ button:hover {
     z-index: 1;
     border-radius: 5vw;
     margin-left: 27%;
-    margin-top: 14%;
+    margin-top: 11%;
+    
+} 
+
+.right-line-company2 {
+    max-width: 100%;
+    width: 60%; 
+    height: 5%; 
+    background-color: #2e97ec; 
+    position: absolute;
+    z-index: 1;
+    border-radius: 5vw;
+    margin-left: 27%;
+    margin-top: 15%;
     
 } 
 
@@ -633,67 +643,67 @@ button:hover {
 
 @keyframes fadeInUp {
     from {
-      opacity: 0;
-      transform: translateY(50px);
+        opacity: 0;
+        transform: translateY(50px);
     }
     to {
-      opacity: 1;
-      transform: translateY(0);
+        opacity: 1;
+        transform: translateY(0);
     }
   }
   
-  @keyframes slideInLeft {
+@keyframes slideInLeft {
     from {
-      opacity: 0;
-      transform: translateX(-100px);
+        opacity: 0;
+        transform: translateX(-100px);
     }
     to {
-      opacity: 1;
-      transform: translateX(0);
+        opacity: 1;
+        transform: translateX(0);
     }
   }
   
-  @keyframes slideInRight {
+@keyframes slideInRight {
     from {
-      opacity: 0;
-      transform: translateX(100px);
+        opacity: 0;
+        transform: translateX(100px);
     }
     to {
-      opacity: 1;
-      transform: translateX(0);
+        opacity: 1;
+        transform: translateX(0);
     }
   }
   
-  .animate {
-    animation-duration: 1s;
-    animation-fill-mode: both;
+.animate {
+animation-duration: 1s;
+animation-fill-mode: both;
   }
   
-  .fadeInUp { animation-name: fadeInUp; }
-  .slideInLeft { animation-name: slideInLeft; }
-  .slideInRight { animation-name: slideInRight; }
+.fadeInUp { animation-name: fadeInUp; }
+.slideInLeft { animation-name: slideInLeft; }
+.slideInRight { animation-name: slideInRight; }
   
   /* Изначально скрываем элементы */
-  [data-animation] {
+[data-animation] {
     opacity: 0;
-  }
+}
 
 /* --- 1200px и меньше: планшеты, небольшие ноутбуки --- */
 @media (max-width: 1200px) {
-    .logo { width: 20%; height: 10%;  }
-    .bar {height: 11%;}
-    .navbar ul { gap: 1.5rem; margin-left: 4%;}
-    .company-info{ font-size: 2vw; margin-left: 5%; }
-    .company-info2 { font-size: 2vw; margin-left: 45%;}
-    .infoP { margin-top: 35%; margin-left: 5%; font-size: 1.5vw;}
-    .infoP2 { margin-top: 35%; margin-left: 45%; font-size: 1.5vw;}
-    .Company-img1 { width: 37%; margin-top: 7%; margin-left: 40%;}
-    .Company-img2 { width: 40%; margin-top: 5%; margin-left: 2%;}
+    .logo { width: 20%;}
+    .bar {height: 15%;}
+    .navbar ul { gap: 1.5rem;}
+    .company-info{ font-size: 2vw; margin-left: 10%; margin-top: -45%; }
+    .company-info2 { font-size: 2vw; margin-left: 55%; margin-top: -40%;}
+    .infoP { margin-top: 35%; margin-left: 10%; font-size: 1.5vw;}
+    .infoP2 { margin-top: 35%; margin-left: 55%; font-size: 1.5vw;}
+    .Company-img1 { width: 50%; margin-top: 7%; margin-left: 45%;}
+    .Company-img2 { width: 50%; margin-top: 5%; margin-left: 2%;}
     .container1 p { font-size: 2vw;}
     .container-infoP {font-size: 1.5vw;}
     .logo-container { width: 50%;}
     .footer-menu, .contacts{margin-top: 1%;}
-    .map iFrame {margin-top: 1%; width: 30%; height: 60%;}
+    .map iFrame {margin-top: 1%; width: 100%; height: 100%;}
     .footer-container { 
         font-size: 1.5vw; display: grid;
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -701,20 +711,22 @@ button:hover {
         max-width: 100%;}
     .footer-bottom {font-size: 1.5vw;margin-top: 2%;}
     .block-company p {font-size: 2vw;}
-    .left-line-company {margin-top: 22%;}
-    .left-line-company2 {margin-top: 27%;}
-    .right-line-company {margin-top: 22%;}
+    .left-line-company {margin-top: 18%;}
+    .left-line-company2 {margin-top: 26%;}
+    .right-line-company {margin-top: 16%;}
+    .right-line-company2 {margin-top: 21%;}
     .team-member h2{font-size: 2vw;}
     .team-member p{font-size: 1.2vw;}
     .friend-box-color {height: 22%;}
+    .map-section iFrame {width: 30%; height: 100%;}
   }
   
   /* --- 768px и меньше: планшеты, крупные смартфоны --- */
 @media (max-width: 768px) {
-    .logo { width: 38%; height: auto; margin-left: 5%; }
-    .bar { height: 20%; }
+    .logo { width: 38%; height: auto;  }
+    .bar { height: 17%; }
     .header-contacts { display: none; }
-    .burger { display: block; right: 20px; top: 80px; }
+    .burger { display: block; right: 40px; top: 80px; }
     .burger.active .burger-line:nth-child(1) {
         transform: rotate(45deg) translate(5px, 5px);
     }
@@ -743,7 +755,7 @@ button:hover {
     }
     .navbar ul.active { right: 0; }
     .navbar a { font-size: 5vw; color: #FFF;}
-    .company, .company2, .project, .friend, .services, .contacts-cont, .sertificat, .Company-derector, .company-str, .form-question { font-size: 5vw; }
+    .Company, .Company2, .project, .friend, .services, .contacts-cont, .sertificat, .Company-derector, .company-str, .form-question, .projects{ font-size: 5vw; margin-top: 15%; margin-bottom: 10%; }
     .company-info, .company-info2 {
         position: static;
         width: 92%;
@@ -760,20 +772,20 @@ button:hover {
     .company-first{
         width: 95%;
         height: 82%;
-        margin-left: 2.5%;
+        margin-left: 1%;
         border-radius: 2vw;
     }
     .company-second {
         width: 95%;
         height: 85%;
-        margin-left: 2.5%;
+        margin-left: 1%;
         border-radius: 2vw;
     }
     .infoP {margin-top: 0%; font-size: 3vw; margin-left: 4%;}
     .infoP2 {margin-top: 0%; margin-left: 4%; font-size: 3vw;}
     .section-box-project{
         max-width: 95%;
-        margin-left: 2.5%;
+        margin-left: 1%;
         border-radius: 3vw;
     }
     .friend-box-color {max-width: 60%; margin-left: 20%; height: 18%;}
@@ -791,9 +803,10 @@ button:hover {
     .block-company p {font-size: 3vw;}
     .left-text-company-algin-box {width: 95%; margin-left: 0%;}
     .right-text-company-algin-box {width: 95%; margin-left: 5%;}
-    .left-line-company {margin-top: 32%;}
-    .left-line-company2 {margin-top: 37%;}
-    .right-line-company {margin-top: 32%;}
+    .left-line-company {margin-top: 21%;}
+    .left-line-company2 {margin-top: 30%;}
+    .right-line-company {margin-top: 21%;}
+    .right-line-company2 {margin-top: 29%;}
     .team-member h2 { font-size: 3vw; }
     .team-member p { font-size: 2vw; }
     .container-member { grid-template-columns: 1fr; padding: 5%; }
@@ -827,7 +840,7 @@ button:hover {
     .container1 p, .container-infoP { font-size: 4vw; }
     .logo-container {width: 100%;}
     .friend-box-color {max-width: 100%; width: 100%; margin-left: 0; border-radius: 0;}
-    .friend-box img {margin-left: 90%; width: 120%; max-width: 150%;}
+    .friend-box img {margin-left: 0%;  width: 100%;}
     label, input, textarea, .button-form-input, .text-question {
         font-size: 3vw !important;
         width: 90% !important;
@@ -836,9 +849,10 @@ button:hover {
     .block-company p {font-size: 4vw;}
     .left-text-company-algin-box {width: 100%; margin-left: 0%;}
     .right-text-company-algin-box {width: 100%; margin-left: 0%;}
-    .left-line-company {margin-top: 41%;}
-    .left-line-company2 {margin-top: 47%;}
-    .right-line-company {margin-top: 42%;}
+    .left-line-company {display: none;}
+    .left-line-company2 {display: none;}
+    .right-line-company {display: none;}
+    .right-line-company2 {display: none;}
     .project-name {font-size: 4vw;}
     .projects-box p {font-size: 3vw;}
     .projects-box img {width: 50%; margin-left: 25%; }
@@ -847,29 +861,25 @@ button:hover {
     .services-text-left {font-size: 4vw;}
     .services-text-right {font-size: 4vw;}
     .services-text-compl-work {font-size: 4vw;}
+    .map-section { width: 80%; margin-left: 20%; }
   }
 
   /* --- 375px смартфоны --- */
-@media (max-width: 375px) {
-    .company, .projects, .company2, .project, .friend, .services, .contacts-cont, .sertificat, .Company-derector, .company-str, .form-question { font-size: 9vw; margin-top: 7%; margin-bottom: 7%; }
+@media (max-width: 376px) {
+    .Company, .projects, .Company2, .project, .friend, .services, .contacts-cont, .sertificat, .Company-derector, .company-str, .form-question { font-size: 9vw; margin-top: 7%; margin-bottom: 7%; }
     .burger {top: 50px;}
-    .friend {display: none;}
-    .friend-box {display: none;}
-    .friend-box-color {display: none;}
-    .map p {margin-left: 10%;}
-    .map iframe {width: 60%; height: 60%; margin-left: 10%;}
+    .bar {height: 10%;}
+    .map p {display: none;}
+    .map iframe {display: none;}
     .footer-bottom {margin-top: 0; margin-bottom: 0; margin-left: 0;}
     .left-text-company-algin-box {width: 100%; margin-left: 0%;}
     .right-text-company-algin-box {width: 100%; margin-left: 0%;}
-    .left-line-company {display: none;}
-    .left-line-company2 {display: none;}
-    .right-line-company {display: none;}
     .block-company p {font-size: 4.5vw;}
     .team-member h2 { font-size: 5vw; }
     .team-member p { font-size: 3vw; }
     .logo-container {display: none;}
-    .footer-container { font-size: 3vw; }
-    .footer-bottom {font-size: 3vw;}
+    .footer-container { margin-left: 0; font-size: 3vw; display: flex;}
+    .footer-bottom {font-size: 3vw; margin-top: 5%;}
     .project-name {font-size: 5vw;}
     .projects-box p {font-size: 4vw;}
 }
