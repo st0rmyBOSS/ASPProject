@@ -93,9 +93,9 @@
 
         <h1 class="company-str">О компании</h1>
 
-        <div class="block-company">
-            <div class="left-line-company"></div>
-            <div class="left-text-company-algin-box">
+        <section class="block-company" data-animation="fadeInUp">
+            <div class="left-line-company" data-animation="slideInLeft"></div>
+            <div class="left-text-company-algin-box" data-animation="slideInRight">
             <p class="left-text-company-algin">История нашей организации берет свое начало 
                 деятельности с 2009 года путем выделения части 
                 части молодых и перспективных специалистов различной 
@@ -104,9 +104,9 @@
                 Центра Энергетики» ОАО «ЮИЦЭ».</p>
             </div>
 
-            <div class="right-line-company"></div>
+            <div class="right-line-company" data-animation="slideInRight"></div>
 
-            <div class="right-text-company-algin-box">
+            <div class="right-text-company-algin-box" data-animation="slideInLeft">
             <p class="right-text-company-algin">
                 Образование ООО «Арт-Строй Проект» как отдельной 
                 самодостаточной организации позволило задать новый 
@@ -116,8 +116,8 @@
             </p>
             </div>
 
-            <div class="left-line-company2"></div>
-            <div class="left-text-company-algin-box">
+            <div class="left-line-company2" data-animation="slideInLeft"></div>
+            <div class="left-text-company-algin-box" data-animation="slideInRight">
                 <p class="left-text-company-algin">В настоящее время ООО «Арт-Строй Проект» является 
                     динамически развивающейся организацией с каждым годом 
                     расширяющей свой потенциал и портфель заказов в 
@@ -126,8 +126,8 @@
                     документов и иных тенденций рынка инжиниринговых услуг.
                 </p>
             </div>
-            <div class="right-line-company"></div>
-            <div class="right-text-company-algin-box">
+            <div class="right-line-company" data-animation="slideInRight"></div>
+            <div class="right-text-company-algin-box" data-animation="slideInLeft">
                 <p class="right-text-company-algin">Благодаря накопленному опыту специалистов нашей 
                     компании и оптимизированному подходу к решению 
                     комплексных задач ставимых различными Заказчиками 
@@ -141,9 +141,9 @@
 
             
 
-        </div>
+        </section>
 
-        <div>
+        <section data-animation="fadeInUp">
 
             <h1 class="Company-derector">Наше руководство</h1>
             
@@ -161,7 +161,7 @@
                     <p>Главный инженер</p>
                 </div>
             </div>
-        </div>
+        </section>
 
     </main>
 
@@ -197,6 +197,28 @@
                     <p>ООО "Арт-Строй Проект" © 2025. Все права защищены.</p>
                 </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const animatedElements = document.querySelectorAll('[data-animation]');
+          
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const animationType = entry.target.dataset.animation;
+                entry.target.style.opacity = 1;
+                entry.target.classList.add('animate', animationType);
+              }
+            });
+          }, {
+            threshold: 0.2
+          });
+        
+          animatedElements.forEach(element => {
+            observer.observe(element);
+          });
+        });
+        </script>
 
 </body>
 </html>

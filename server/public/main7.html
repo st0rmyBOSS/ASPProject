@@ -90,9 +90,9 @@
         </div>
     </header>
     <main>
-        <section class="projects-box">
+        <section class="projects-box" >
                 <h1 class="projects">Наши проекты</h1>
-                <div>
+                <div data-animation="slideInLeft">
                     <h2 class="project-name">Реконструкция тепловой магистрали №17а на участке от УЗ-34-39 до НО-247 в г. Волгодонске. </h2>
                     <p>Выполнение проектной документации – 2014г.</p>
                     <p>Реализация – 2015г.</p>
@@ -109,8 +109,8 @@
                     <img src="./jpg-projects/DSC07818 1.png">
                     <img src="./jpg-projects/DSC07830 2.png">
                 </div>
-                <div>
-                    <h2 class="project-name">Техническое перевооружение участка теплотрассы по ул. Зорге от ТК 127/5 до ТК 618 в г. Ростове-на-Дону. </h2>
+                <div data-animation="slideInRight">
+                    <h2 class="project-name" >Техническое перевооружение участка теплотрассы по ул. Зорге от ТК 127/5 до ТК 618 в г. Ростове-на-Дону. </h2>
                     <p>Выполнение проектной документации – 2015г.</p>
                     <p>Реализация – 2016г.</p>
                     <p>Краткое описание объекта. Участок тепловой сети прокладывается в г. Ростове-на-Дону 
@@ -125,7 +125,7 @@
                     <img src="./jpg-projects/DSC07911 1.png">
                     <img src="./jpg-projects/DSC07915 2.png">
                 </div>
-                <div>
+                <div data-animation="slideInLeft">
                     <h2 class="project-name">Техническое перевооружение участка теплотрассы по просп. Королева от ТК 2518 до ТК 2526 в г. Ростове-на-Дону. </h2>
                     <p>Выполнение проектной документации – 2015г.</p>
                     <p>Реализация – 2016г.</p>
@@ -141,7 +141,7 @@
                     <img src="./jpg-projects/DSC08023.png">
                     <img src="./jpg-projects/DSC08025.png">
                 </div>
-                <div>
+                <div data-animation="slideInRight">
                     <h2 class="project-name">Модернизация участка теплотрассы по Аллее Роз от ТК-408 до ТК-315 от ул. 2-я Краснодарская до пр. Коммунистического и ул. Зорге в г. Ростове-на-Дону.</h2>
                     <p>Выполнение проектной документации – 2017г.</p>
                     <p>Реализация – 2018г, 2019г.</p>
@@ -157,7 +157,7 @@
                     <img src="./jpg-projects/20170529_135114.png">
                     <img src="./jpg-projects/20170529_144445.png">
                 </div>
-                <div>
+                <div data-animation="slideInLeft">
                     <h2 class="project-name">Модернизация тм по ул. Еременко ТК-627 – ТК-627/12-4 в г. Ростове-на-Дону.</h2>
                     <p>Выполнение проектной документации – 2020г.</p>
                     <p>Реализация – 2021г.</p>
@@ -173,8 +173,8 @@
                     <img src="./jpg-projects/IMG_0862.png">
                     <img src="./jpg-projects/IMG_0874.png">
                 </div>
-                <div>
-                    <h2 class="project-name" >РТС. Модернизация т/м от ТК631/1 до КРП42 (ТК631/9) в г. Ростове-на-Дону.</h2>
+                <div data-animation="slideInRight">
+                    <h2 class="project-name">РТС. Модернизация т/м от ТК631/1 до КРП42 (ТК631/9) в г. Ростове-на-Дону.</h2>
                     <p>Выполнение проектной документации – 2021г.</p>
                     <p>Реализация – 2021г.</p>
                     <p>Краткое описание объекта. Участок тепловой сети прокладывается в г. Ростове-на-Дону 
@@ -189,8 +189,8 @@
                     <img src="./jpg-projects/IMG_2189.png">
                     <img src="./jpg-projects/IMG_2296.png">
                 </div>
-                <div>
-                    <h2 class="project-name" >ВТС. Модернизация уч-ка т/м М-9 от ТК-I-9-5 до Уз-9-28 в г. Волгодонске 2 очередь. </h2>
+                <div data-animation="slideInLeft">
+                    <h2 class="project-name">ВТС. Модернизация уч-ка т/м М-9 от ТК-I-9-5 до Уз-9-28 в г. Волгодонске 2 очередь. </h2>
                     <p>Выполнение проектной документации – 2021г.</p>
                     <p>Реализация – 2021г.</p>
                     <p>Краткое описание объекта. Участок тепловой сети прокладывается в г. Волгодонске по ул.
@@ -205,7 +205,7 @@
                     <img src="./jpg-projects/IMG_2602.png">
                     <img src="./jpg-projects/PHOTO-2021-09-06-12-37-22.png">
                 </div>
-                <div>
+                <div data-animation="slideInRight">
                     <h2 class="project-name" >ВТС. Модернизация уч-ка т/м №7 от Ут-5-37 до НО-144 в г. Волгодонске. </h2>
                     <p>Выполнение проектной документации – 2021г.</p>
                     <p>Реализация – 2021г.</p>
@@ -256,6 +256,28 @@
                     <p>ООО "Арт-Строй Проект" © 2025. Все права защищены.</p>
                 </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const animatedElements = document.querySelectorAll('[data-animation]');
+          
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const animationType = entry.target.dataset.animation;
+                entry.target.style.opacity = 1;
+                entry.target.classList.add('animate', animationType);
+              }
+            });
+          }, {
+            threshold: 0.2
+          });
+        
+          animatedElements.forEach(element => {
+            observer.observe(element);
+          });
+        });
+        </script>
 
 </body>
 </html>

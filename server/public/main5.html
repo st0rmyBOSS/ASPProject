@@ -92,8 +92,8 @@
 
     <main>
         <h1 class="services">Наши услуги</h1>
-        <div class="services-box">
-            <p class="services-text-left">Наша организация использует комплексный подход к решению любой задачи. 
+        <section class="services-box" data-animation="fadeInUp">
+            <p class="services-text-left" data-animation="slideInLeft">Наша организация использует комплексный подход к решению любой задачи. 
                 Мы совмещаем традиционные принципы с внедрением инновационных идей.
                 Кредо ООО «Арт-Строй Проект» - каждый объект уникален и требует индивидуального 
                 и всестороннего анализа вне зависимости от масштаба и финансовой составляющей.
@@ -102,7 +102,7 @@
                 вплоть до реализации и подтверждения гарантийных показателей.
                 </p>
                 <div class="line-one"></div>
-                <ul class="services-text-right">Персонал нашей организации имеет соответствующий уровень образования, знаний 
+                <ul class="services-text-right" data-animation="slideInRight">Персонал нашей организации имеет соответствующий уровень образования, знаний 
                     и опыта работы по различным направлениям энергоинжиниринга. 
                     Специалисты ООО «Арт-Строй Проект»:
                    <li> аттестованы в соответствующих областях по промышленной безопасности, </li>
@@ -115,10 +115,11 @@
                     менеджмента качества ISO 9001.</li> 
                 </ul>
 
-            </div>
-            <div>
+        </section>
+
+        <section data-animation="fadeInUp">
                     <div class="line-two"></div>
-                    <ul class="services-text-compl-work">
+                    <ul class="services-text-compl-work" data-animation="slideInRight">
                         Виды работ, выполняемые ООО «Арт-Строй Проект»
                         <li> разработка технико-экономических обоснований реализации инвестиционных проектов;</li>
                         <li> предпроектные обследования и проработки; </li>
@@ -145,7 +146,7 @@
                         <li> выполнение гарантийных и режимных испытаний оборудования и систем; </li>
                         <li> энерготехнологическое обследование и аудит;</li> 
                     </ul>
-        </div>
+        </section>
     </main>
 
     <footer class="footer-services">
@@ -180,3 +181,28 @@
                     <p>ООО "Арт-Строй Проект" © 2025. Все права защищены.</p>
                 </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const animatedElements = document.querySelectorAll('[data-animation]');
+          
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const animationType = entry.target.dataset.animation;
+                entry.target.style.opacity = 1;
+                entry.target.classList.add('animate', animationType);
+              }
+            });
+          }, {
+            threshold: 0.2
+          });
+        
+          animatedElements.forEach(element => {
+            observer.observe(element);
+          });
+        });
+        </script>
+
+</body>
+</html>    

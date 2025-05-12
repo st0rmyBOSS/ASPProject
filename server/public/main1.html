@@ -8,7 +8,7 @@
     href="./jpg/изображение_2025-04-18_145257872.png">
 </head>
 <body>
-    <header>
+    <header >
         <div>
             <div>
                 <div class="bar"></div>
@@ -89,12 +89,12 @@
         </div>
     </header>
     <main>
-        <section class="section-about-company">
+        <section class="section-about-company" data-animation="fadeInUp">
             <h1 class="Company" >О нашей компании</h1>
-            <div class="company-first">
+            <div class="company-first" data-animation="slideInLeft">
                     <div>
                         <img class="Company-img1" src="./jpg/1636.jpg">
-                        <p class="company-info" >История нашей организации берет свое начало деятельности с 2009 года путем выделения части части молодых и 
+                        <p class="company-info" >История нашей организации берет свое начало деятельности с 2009 года путем выделения части  молодых и 
                             перспективных специалистов различной направленности из отдельных филиалов действующего 
                             в этот момент «Южного Инженерного Центра Энергетики» ОАО «ЮИЦЭ».</p>
                         <a class="infoP" href="./main2.html">Подробнее</a>
@@ -102,7 +102,7 @@
             </div>
 
             <h1 class="Company2" >Наши услуги</h1>
-            <div class="company-second">
+            <div class="company-second" data-animation="slideInRight">
                     <div>
                         <img class="Company-img2" src="./jpg/тепло (1).jpeg">
                         <p class="company-info2" >Наша организация использует комплексный подход к решению любой задачи. Мы совмещаем традиционные 
@@ -115,9 +115,9 @@
         </section>
         <div class="line"></div>
         <h1 class="project">Наши проекты</h1>
-        <section class="section-box-project">
+        <section class="section-box-project" data-animation="fadeInUp">
             <div class="container1">
-                <div class="project-card">
+                <div class="project-card" data-animation="slideInRight">
                     <img class="container-img1" src="./jpg/DSC08006.JPG">
                     <p>
                         Техническое перевооружение участка теплотрассы по просп. Королева от ТК 2518 до ТК 2526 в г. Ростове-на-Дону. 
@@ -125,7 +125,7 @@
                     <a class="container-infoP" href="./main7.html">Подробнее</a>
                 </div>
 
-                <div class="project-card">
+                <div class="project-card" data-animation="slideInLeft">
                     <img class="container-img2" src="./jpg/DSC07915.JPG">
                     <p>
                         Техническое перевооружение участка теплотрассы по ул. Зорге от ТК 127/5 до ТК 618 в г. Ростове-на-Дону. 
@@ -133,7 +133,7 @@
                     <a class="container-infoP" href="./main7.html">Подробнее</a>
                 </div>
 
-                <div class="project-card">
+                <div class="project-card" data-animation="slideInRight">
                     <img class="container-img3" src="./jpg/DSC07830.JPG">
                     <p>
                         Реконструкция тепловой магистрали №17а на участке от УЗ-34-39 до НО-247 в г. Волгодонске. 
@@ -143,7 +143,7 @@
             </div>
         </section>
 
-        <div>
+        <section data-animation="fadeInUp">
             <h1 class="friend">Наши партнеры</h1>
             <div class="friend-box-color">
                 <div class="friend-box">
@@ -152,7 +152,7 @@
                     <img class="friend-img-gazprom" src="./jpg/Gazprom-Logo-rus.svg.png">
                 </div>
             </div>
-        </div>
+        </section>
         
     </main>
 
@@ -180,7 +180,7 @@
             </div>
             <div class="map">
                 <p>Где нас найти</p>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d677.5774236869189!2d39.59727446967932!3d47.210522309218554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40e3bf4294666ae7%3A0x2d1ba2455319525f!2z0L_RgC4g0KHRgtCw0YfQutC4LCAzNDgsINCg0L7RgdGC0L7Qsi3QvdCwLdCU0L7QvdGDLCDQoNC-0YHRgtC-0LLRgdC60LDRjyDQvtCx0LsuLCAzNDQwMDQ!5e0!3m2!1sru!2sru!4v1745254885525!5m2!1sru!2sru" width="80%" height="70%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d180.61418982411584!2d39.7259214!3d43.5893189!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40f5cbd0646158a1%3A0xaf5ab4d2022acb17!2z0YPQuy4g0KHQvtCy0LXRgtGB0LrQsNGPLCA2NSwg0KHQvtGH0LgsINCa0YDQsNGB0L3QvtC00LDRgNGB0LrQuNC5INC60YDQsNC5LCAzNTQwMDA!5e0!3m2!1sru!2sru!4v1747050858644!5m2!1sru!2sru" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
             <div class="line-foot"></div>
@@ -188,6 +188,28 @@
                     <p>ООО "Арт-Строй Проект" © 2025. Все права защищены.</p>
                 </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const animatedElements = document.querySelectorAll('[data-animation]');
+          
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const animationType = entry.target.dataset.animation;
+                entry.target.style.opacity = 1;
+                entry.target.classList.add('animate', animationType);
+              }
+            });
+          }, {
+            threshold: 0.2
+          });
+        
+          animatedElements.forEach(element => {
+            observer.observe(element);
+          });
+        });
+        </script>
 
 </body>
 </html>

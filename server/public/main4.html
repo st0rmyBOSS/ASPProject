@@ -91,7 +91,7 @@
     </header>
 
     <main>
-        <div class="contact">
+        <section class="contact" data-animation="fadeInUp">
             <h1 class="contacts-cont">Контакты</h1>
             <p>Дорогой друг, если 
                 ты хочешь задать вопросы лично,
@@ -106,7 +106,7 @@
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d722.4565820153209!2d39.725373869670385!3d43.58933366955667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40f5cbd0646158a1%3A0xaf5ab4d2022acb17!2z0YPQuy4g0KHQvtCy0LXRgtGB0LrQsNGPLCA2NSwg0KHQvtGH0LgsINCa0YDQsNGB0L3QvtC00LDRgNGB0LrQuNC5INC60YDQsNC5LCAzNTQwMDA!5e0!3m2!1sru!2sru!4v1745273695497!5m2!1sru!2sru" 
                 width="50%" height="50%" style="border: 0 ;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
-        </div>
+        </section>
     </main>
 
     <footer class="footer-company">
@@ -141,6 +141,28 @@
                     <p>ООО "Арт-Строй Проект" © 2025. Все права защищены.</p>
                 </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const animatedElements = document.querySelectorAll('[data-animation]');
+          
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const animationType = entry.target.dataset.animation;
+                entry.target.style.opacity = 1;
+                entry.target.classList.add('animate', animationType);
+              }
+            });
+          }, {
+            threshold: 0.2
+          });
+        
+          animatedElements.forEach(element => {
+            observer.observe(element);
+          });
+        });
+        </script>
 
 </body>
 </html>

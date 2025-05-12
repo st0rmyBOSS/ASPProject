@@ -92,7 +92,7 @@
 
     <main class="container-form-main">
 
-        <div class="container-form">
+        <section class="container-form" data-animation="fadeInUp">
             <h1 class="form-question">Свяжитесь с нами</h1>
             <form id="contactForm">
                 <label for="name">Имя:</label>
@@ -153,11 +153,7 @@
                 }
                 </script>
 
-        </div>
-
-       
-
-        <script src="./script.js"></script>
+        </section>
         
     </main>
 
@@ -193,5 +189,28 @@
                     <p>ООО "Арт-Строй Проект" © 2025. Все права защищены.</p>
                 </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const animatedElements = document.querySelectorAll('[data-animation]');
+          
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const animationType = entry.target.dataset.animation;
+                entry.target.style.opacity = 1;
+                entry.target.classList.add('animate', animationType);
+              }
+            });
+          }, {
+            threshold: 0.2
+          });
+        
+          animatedElements.forEach(element => {
+            observer.observe(element);
+          });
+        });
+        </script>
+
 </body>
 </html>

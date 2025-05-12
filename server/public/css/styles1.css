@@ -39,8 +39,8 @@ h1 {
 .bar {
     width: 100%;
     max-width: 100%;
-    height: 15%;
-    max-height: 15%;
+    height: 16%;
+    max-height: 25%;
     background-color: #dae4ff;
     position: absolute;
     opacity: 0.8;
@@ -134,7 +134,7 @@ h1 {
     background-color: #FFF;
     margin-left: 20%;
     width: 80%;
-    height: 55%;
+    height: 56%;
     border-radius: 1vw;
 }
 
@@ -152,7 +152,7 @@ h1 {
     font-size: 1.5vw;
     width: 33%;
     position: absolute;
-    margin-left: 35%;
+    margin-left: 45%;
     margin-top: 3%;
     line-height: 1.5;
 }
@@ -160,7 +160,7 @@ h1 {
 .infoP {
     position: absolute;
     margin-left: 15%;
-    margin-top: 20%;
+    margin-top: 29%;
     font-size: 1.5vw;
     border-radius: 1vw;
     text-decoration: underline;
@@ -176,8 +176,8 @@ h1 {
 
 .infoP2 {
     position: absolute;
-    margin-left: 35%;
-    margin-top: 23%;
+    margin-left: 45%;
+    margin-top: 33%;
     font-size: 1.5vw;
     border-radius: 1vw;
     text-decoration: underline;
@@ -192,19 +192,19 @@ h1 {
 }
 
 .Company-img1{
-    width: 30%;
+    width: 40%;
     position: absolute;
-    margin-left: 49%;
-    margin-top: 3%;
+    margin-left: 50%;
+    margin-top: 5%;
     border-radius: 1vw;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 .Company-img2{
-    width: 30%;
+    width: 40%;
     position: absolute;
     margin-left: 2%;
-    margin-top: 2%;
+    margin-top: 4%;
     border-radius: 1vw;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
@@ -240,7 +240,7 @@ h1 {
     background-color: #FFF;
     max-width: 60%;
     margin-left: 20%;
-    height: 30%;
+    height: 24%;
     border-radius: 2vw;
 }
 
@@ -614,6 +614,7 @@ button:hover {
     font-size: 1.5vw;
     text-align: center;
     color: #FFF;
+    padding: 0 10%; 
 }
 
 .projects-box img {
@@ -630,6 +631,53 @@ button:hover {
     text-align: center;
 }
 
+@keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-100px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .animate {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+  }
+  
+  .fadeInUp { animation-name: fadeInUp; }
+  .slideInLeft { animation-name: slideInLeft; }
+  .slideInRight { animation-name: slideInRight; }
+  
+  /* Изначально скрываем элементы */
+  [data-animation] {
+    opacity: 0;
+  }
+
 /* --- 1200px и меньше: планшеты, небольшие ноутбуки --- */
 @media (max-width: 1200px) {
     .logo { width: 20%; height: 10%;  }
@@ -644,11 +692,12 @@ button:hover {
     .container1 p { font-size: 2vw;}
     .container-infoP {font-size: 1.5vw;}
     .logo-container { width: 50%;}
-    .footer-menu, .contacts, .map {margin-top: 1%;}
+    .footer-menu, .contacts{margin-top: 1%;}
+    .map iFrame {margin-top: 1%; width: 30%; height: 60%;}
     .footer-container { 
         font-size: 1.5vw; display: grid;
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 2rem;
+        gap: 1rem;
         max-width: 100%;}
     .footer-bottom {font-size: 1.5vw;margin-top: 2%;}
     .block-company p {font-size: 2vw;}
@@ -808,8 +857,8 @@ button:hover {
     .friend-box {display: none;}
     .friend-box-color {display: none;}
     .map p {margin-left: 10%;}
-    .map iframe {width: 100%; height: 60%; margin-left: 10%;}
-    .footer-bottom {margin-top: 0; margin-bottom: 0;}
+    .map iframe {width: 60%; height: 60%; margin-left: 10%;}
+    .footer-bottom {margin-top: 0; margin-bottom: 0; margin-left: 0;}
     .left-text-company-algin-box {width: 100%; margin-left: 0%;}
     .right-text-company-algin-box {width: 100%; margin-left: 0%;}
     .left-line-company {display: none;}
