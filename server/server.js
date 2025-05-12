@@ -4,7 +4,6 @@ const mysql = require('mysql2/promise');
 const cors = require('cors');
 const app = express();
 
-// Проверка переменных окружения
 const requiredEnvVars = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_DATABASE'];
 requiredEnvVars.forEach(varName => {
     if (!process.env[varName]) {
@@ -16,10 +15,9 @@ requiredEnvVars.forEach(varName => {
 const path = require('path');
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(express.json()); // Добавьте эту строку
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Middleware
 app.use(cors({
     origin: (origin, callback) => {
         callback(null, true)
@@ -28,8 +26,6 @@ app.use(cors({
     credentials: true, allowedHeaders: ['Content-Type']
 }));
 
-
-// Пул подключений
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -40,7 +36,6 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
-// Проверка подключения при старте сервера
 const checkDatabaseConnection = async () => {
     try {
         const connection = await pool.getConnection();
@@ -52,7 +47,6 @@ const checkDatabaseConnection = async () => {
     }
 };
 
-// Эндпоинт для проверки статуса БД
 app.get('/healthcheck', async (req, res) => {
     try {
         const connection = await pool.getConnection();
@@ -71,29 +65,24 @@ app.get('/healthcheck', async (req, res) => {
     }
 });
 
-// Маршрут для главной страницы формы
-app.get('/main3.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'main3.html'));
+app.get('/index-page-question.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index-page-question.html'));
 });
 
-// Обработчик формы (ваш существующий код)
 app.post('/submit', async (req, res) => {
     console.log('Получен запрос:', req.body);
     
     try {
         const { name, number, email, question } = req.body;
         
-        // Валидация
         if (!name || !number || !email || !question) {
             console.log('Ошибка валидации');
             return res.status(400).json({ error: 'Все поля обязательны' });
         }
 
-        // Подключение к БД
         const connection = await pool.getConnection();
         console.log('Успешное подключение к БД');
 
-        // Выполнение запроса
         const [result] = await connection.execute(
             'INSERT INTO form (name, number, email, question) VALUES (?, ?, ?, ?)',
             [name, number, email, question]
@@ -118,11 +107,9 @@ app.post('/submit', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-// Запуск сервера с проверкой подключения
 checkDatabaseConnection().then(() => {
     app.listen(PORT, () => {
         console.log(`\n🚀 Сервер запущен на порту ${PORT}`);
-        // console.log(`🔍 Проверьте статус подключения: http://localhost:${PORT}/healthcheck\n`);
     });
 });
 

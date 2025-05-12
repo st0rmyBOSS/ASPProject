@@ -63,13 +63,11 @@
                 const burger = document.querySelector('.burger');
                 const navList = document.querySelector('.navbar ul');
                 
-                // Открытие/закрытие меню
                 burger.addEventListener('click', () => {
                     navList.classList.toggle('active');
                     burger.classList.toggle('active');
                 });
             
-                // Закрытие меню при клике на ссылку
                 document.querySelectorAll('.navbar a').forEach(link => {
                     link.addEventListener('click', () => {
                         navList.classList.remove('active');
@@ -77,7 +75,6 @@
                     });
                 });
             
-                // Закрытие меню при клике вне области
                 document.addEventListener('click', (e) => {
                     if (!e.target.closest('.navbar') && navList.classList.contains('active')) {
                         navList.classList.remove('active');
