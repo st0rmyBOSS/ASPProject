@@ -2,13 +2,29 @@ require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql2/promise');
 const cors = require('cors');
+const nodemailer = require('nodemailer');
 const app = express();
 
-const requiredEnvVars = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_DATABASE'];
+// Проверка обязательных переменных окружения
+const requiredEnvVars = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_DATABASE', 'EMAIL_USER', 'EMAIL_PASS', 'EMAIL_TO'];
 requiredEnvVars.forEach(varName => {
     if (!process.env[varName]) {
         console.error(`Ошибка: Отсутствует переменная окружения ${varName}`);
         process.exit(1);
+    }
+});
+
+// Настройка транспорта для nodemailer
+const transporter = nodemailer.createTransport({
+    host: 'smtp.yandex.ru',
+    port: 465,  // SSL
+    secure: true,
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    },
+    tls: {
+        rejectUnauthorized: false  // Для тестов (не для продакшена!)
     }
 });
 
@@ -80,6 +96,7 @@ app.post('/submit', async (req, res) => {
             return res.status(400).json({ error: 'Все поля обязательны' });
         }
 
+        // Сохранение в БД
         const connection = await pool.getConnection();
         console.log('Успешное подключение к БД');
 
@@ -91,13 +108,36 @@ app.post('/submit', async (req, res) => {
         connection.release();
         console.log('Данные сохранены, ID:', result.insertId);
 
+        // Отправка письма
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: process.env.EMAIL_TO,
+            subject: 'Новый вопрос с сайта',
+            text: `
+                Имя: ${name}
+                Телефон: ${number}
+                Email: ${email}
+                Вопрос: ${question}
+            `,
+            html: `
+                <h1>Новый вопрос с сайта</h1>
+                <p><strong>Имя:</strong> ${name}</p>
+                <p><strong>Телефон:</strong> ${number}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Вопрос:</strong> ${question}</p>
+            `
+        };
+
+        await transporter.sendMail(mailOptions);
+        console.log('Письмо успешно отправлено');
+
         res.status(201).json({ 
             message: 'Запрос получен', 
             id: result.insertId 
         });
 
     } catch (error) {
-        console.error('Ошибка MySQL:', error.message);
+        console.error('Ошибка:', error.message);
         res.status(500).json({ 
             error: 'Ошибка сервера',
             details: process.env.NODE_ENV === 'development' ? error.message : 'Подробности скрыты'
@@ -112,5 +152,3 @@ checkDatabaseConnection().then(() => {
         console.log(`\n🚀 Сервер запущен на порту ${PORT}`);
     });
 });
-
-

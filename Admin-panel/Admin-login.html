@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель | Арт-Строй Проект</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <h1>Вход в админ-панель</h1>
+        <div id="loginError" class="admin-error-message"></div>
+        <form class="login-form" id="loginForm">
+            <input type="text" id="username" placeholder="Логин" required>
+            <input type="password" id="password" placeholder="Пароль" required>
+            <button type="submit">Войти</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Простые учетные данные для демонстрации
+            if (username === 'admin' && password === 'admin') {
+                localStorage.setItem('isAdminAuthenticated', 'true');
+                window.location.href = 'admin-panel.html';
+            } else {
+                document.getElementById('loginError').textContent = 'Неверный логин или пароль';
+            }
+        });
+    </script>
+</body>
+</html>

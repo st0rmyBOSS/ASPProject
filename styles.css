@@ -876,3 +876,225 @@ animation-fill-mode: both;
     .projects-box p {font-size: 4vw;}
 }
   
+.login-container {
+    max-width: 500px;
+    margin: 10% auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 1vw;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.login-container h1 {
+    color: #000;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5vw;
+    margin-left: 0;
+}
+
+.login-form button {
+    width: 100%;
+    padding: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0.5vw;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-form button:hover {
+    background-color: #0056b3;
+}
+
+.admin-error-message {
+    color: #721c24;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.admin-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 1vw;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.admin-header h1 {
+    color: #000;
+    margin: 0;
+}
+
+.logout-btn {
+    padding: 0.5rem 1rem;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+}
+
+.admin-tabs {
+    display: flex;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+}
+
+.admin-tab {
+    padding: 0.8rem 1.5rem;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+}
+
+.admin-tab.active {
+    border-bottom: 3px solid #007bff;
+    font-weight: bold;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 1.5rem; 
+    margin-left: 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #000;
+    margin-left: 0;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5vw;
+    font-size: 1rem;
+    margin-left: 0;
+}
+
+.form-group textarea {
+    min-height: 150px;
+}
+
+.save-btn {
+    padding: 0.8rem 1.5rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.save-btn:hover {
+    background-color: #218838;
+}
+
+.project-item {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0.5vw;
+}
+
+.project-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.project-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 0.5vw;
+}
+
+.add-project-btn {
+    margin-top: 1rem;
+    padding: 0.8rem 1.5rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-project-btn:hover {
+    background-color: #0056b3;
+}
+
+.remove-project-btn {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.remove-project-btn:hover {
+    background-color: #c82333;
+}
+
+.file-input {
+    margin-top: 1rem;
+}
+
+.projects-box img {
+    max-width: 100%;
+    width: 20%;
+    margin-left: 8%;
+    margin-top: 3%;
+    margin-bottom: 2%;
+}
+
+.projects-box-add img {
+    max-width: 100%;
+    width: 20%;
+    margin-left: 8%;
+    margin-top: 3%;
+    margin-bottom: 2%;
+}
+
