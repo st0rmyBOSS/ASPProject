@@ -39,7 +39,7 @@ img {
 
 header {
     background-color: #dae4ff;
-    padding: 0 0 5% 0;
+    padding: 1% 0 2% 0;
 }
 
 .header-contacts {
@@ -682,7 +682,6 @@ animation-fill-mode: both;
 /* --- 1200px и меньше: планшеты, небольшие ноутбуки --- */
 @media (max-width: 1200px) {
     .logo { width: 20%;}
-    .bar {height: 15%;}
     .navbar ul { gap: 1.5rem;}
     .company-info{ font-size: 2vw; margin-left: 10%; margin-top: -45%; }
     .company-info2 { font-size: 2vw; margin-left: 55%; margin-top: -40%;}
@@ -715,9 +714,9 @@ animation-fill-mode: both;
   /* --- 768px и меньше: планшеты, крупные смартфоны --- */
 @media (max-width: 768px) {
     .logo { width: 38%; height: auto;  }
-    .bar { height: 17%; }
+    header {padding: 1% 0 5% 0;}
     .header-contacts { display: none; }
-    .burger { display: block; margin-left: 90%; margin-top: -5%;}
+    .burger { display: block; margin-left: 90%;}
     .burger.active .burger-line:nth-child(1) {
         transform: rotate(45deg) translate(5px, 5px);
     }
@@ -820,6 +819,8 @@ animation-fill-mode: both;
   /* --- 576px и меньше: смартфоны --- */
 @media (max-width: 576px) {
     .logo { width: 50%; margin-left: 0; }
+    header {padding: 1% 0 5% 0;}
+    .burger {margin-top: -4%;}
     .Company, .projects, .Company2, .project, .friend, .services, .contacts-cont, .sertificat, .Company-derector, .company-str, .form-question { font-size: 7vw; }
     .company-info, .company-info2, .Company-img1, .Company-img2, .infoP, .infoP2 { width: 90%; margin-left: 5%; margin-top: 3%; font-size: 4vw; }
     .company-first, .company-second { width: 100%; margin-left: 0; border-radius: 4vw; }
@@ -855,15 +856,11 @@ animation-fill-mode: both;
     .map-section { width: 80%; margin-left: 20%; }
   }
 
-@media(max-width: 426px) {
-    .burger {margin-top: -5%;}
-}
-
   /* --- 375px смартфоны --- */
 @media (max-width: 376px) {
     .Company, .projects, .Company2, .project, .friend, .services, .contacts-cont, .sertificat, .Company-derector, .company-str, .form-question { font-size: 9vw; margin-top: 7%; margin-bottom: 7%; }
-    .burger {top: 60px;}
-    .bar {height: 10%;}
+    .burger {margin-top: -6%;}
+    header {padding: 1% 0 4% 0;}
     .map p {display: none;}
     .map iframe {display: none;}
     .footer-bottom {margin-top: 0; margin-bottom: 0; margin-left: 0;}

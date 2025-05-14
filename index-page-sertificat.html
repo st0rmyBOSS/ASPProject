@@ -12,7 +12,6 @@
     <header>
         <div>
             <div>
-                <div class="bar"></div>
                 <a href="./index.html"><img class="logo" src="./jpg/изображение_2025-04-18_1452578721.png"></a>
                 <h3 class="header-contacts" onclick="copyToClipboard(this)">
                     (862) 264-84-33
@@ -23,22 +22,6 @@
                     <span class="copy-feedback"></span>
                 </h3>
             </div>
-
-            <script>
-                function copyToClipboard(element) {
-                    const text = element.childNodes[0].textContent.trim();
-                    const feedback = element.querySelector('.copy-feedback');
-                    
-                    navigator.clipboard.writeText(text).then(() => {
-                        feedback.textContent = ' ✓ Скопировано!';
-                        setTimeout(() => feedback.textContent = '', 2000);
-                    }).catch(err => {
-                        console.error('Ошибка копирования:', err);
-                        feedback.textContent = ' ✗ Ошибка!';
-                        setTimeout(() => feedback.textContent = '', 2000);
-                    });
-                }
-                </script>
 
             <div>
                 <nav class="navbar">
@@ -134,27 +117,7 @@
                 </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          const animatedElements = document.querySelectorAll('[data-animation]');
-          
-          const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                const animationType = entry.target.dataset.animation;
-                entry.target.style.opacity = 1;
-                entry.target.classList.add('animate', animationType);
-              }
-            });
-          }, {
-            threshold: 0.2
-          });
-        
-          animatedElements.forEach(element => {
-            observer.observe(element);
-          });
-        });
-        </script>
+    <script src="./script.js"></script>
 
 </body>
 </html>
