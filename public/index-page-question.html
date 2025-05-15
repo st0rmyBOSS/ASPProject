@@ -6,13 +6,13 @@
     <title>Арт-Строй Проект</title>
     <link rel="stylesheet" href="./styles.css">
     <link rel="website icon" type="png"
-    href="./jpg/изображение_2025-04-18_145257872.png">
+    href="../assets/images/jpg/изображение_2025-04-18_145257872.png">
 </head>
 <body>
     <header>
         <div>
             <div>
-                <a href="./index.html"><img class="logo" src="./jpg/изображение_2025-04-18_1452578721.png"></a>
+                <a href="./index.html"><img class="logo" src="../assets/images/jpg/изображение_2025-04-18_1452578721.png"></a>
                 <h3 class="header-contacts" onclick="copyToClipboard(this)">
                     (862) 264-84-33
                     <span class="copy-feedback"></span>
@@ -46,13 +46,11 @@
                 const burger = document.querySelector('.burger');
                 const navList = document.querySelector('.navbar ul');
                 
-                // Открытие/закрытие меню
                 burger.addEventListener('click', () => {
                     navList.classList.toggle('active');
                     burger.classList.toggle('active');
                 });
             
-                // Закрытие меню при клике на ссылку
                 document.querySelectorAll('.navbar a').forEach(link => {
                     link.addEventListener('click', () => {
                         navList.classList.remove('active');
@@ -60,7 +58,6 @@
                     });
                 });
             
-                // Закрытие меню при клике вне области
                 document.addEventListener('click', (e) => {
                     if (!e.target.closest('.navbar') && navList.classList.contains('active')) {
                         navList.classList.remove('active');
@@ -73,39 +70,46 @@
         </div>
     </header>
 
-    <main>
-        <section class="contact" data-animation="fadeInUp">
-            <h1 class="contacts-cont">Контакты</h1>
-            <p>Дорогой друг, если 
-                ты хочешь задать вопросы лично,
-                то можешь обратиться к нам по телефону или в 
-                офисе нашего предприятия.</p>
-            <p>Тел: (862) 264-84-33</p>
-            <p>Адрес: Юр. Адрес:354000, РФ, Краснодарский край, город Сочи, ул. Советская, 65, помещение 6
-            Адрес: Факт. Адрес: 344103, г. Ростов-на-Дону, проспект стачки 348. </p>
-            <div class="map-section">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d677.5774236869189!2d39.59727446967932!3d47.210522309218554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40e3bf4294666ae7%3A0x2d1ba2455319525f!2z0L_RgC4g0KHRgtCw0YfQutC4LCAzNDgsINCg0L7RgdGC0L7Qsi3QvdCwLdCU0L7QvdGDLCDQoNC-0YHRgtC-0LLRgdC60LDRjyDQvtCx0LsuLCAzNDQwMDQ!5e0!3m2!1sru!2sru!4v1745254885525!5m2!1sru!2sru" 
-                width="50%" height="50%" style="border: 1px;;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d722.4565820153209!2d39.725373869670385!3d43.58933366955667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40f5cbd0646158a1%3A0xaf5ab4d2022acb17!2z0YPQuy4g0KHQvtCy0LXRgtGB0LrQsNGPLCA2NSwg0KHQvtGH0LgsINCa0YDQsNGB0L3QvtC00LDRgNGB0LrQuNC5INC60YDQsNC5LCAzNTQwMDA!5e0!3m2!1sru!2sru!4v1745273695497!5m2!1sru!2sru" 
-                width="50%" height="50%" style="border: 0 ;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
+    <main class="container-form-main">
+
+        <section class="container-form" data-animation="fadeInUp">
+            <h1 class="form-question">Свяжитесь с нами</h1>
+            <form id="contactForm">
+                <label for="name">Имя:</label>
+                <input type="text" id="name" name="name" required>
+    
+                <label for="phone">Номер телефона:</label>
+                <input type="text" id="number" name="number" required>
+    
+                <label for="email">Электронная почта:</label>
+                <input type="email" id="email" name="email" required>
+    
+                <label for="question">Ваш вопрос:</label>
+                <textarea class="text-question" id="question" name="question" rows="1" required></textarea>
+    
+                <input class="button-form-input" type="submit" value="Отправить">
+            </form>
+
+            <div id="messageContainer"></div>
+
         </section>
+        
     </main>
 
     <footer class="footer-company">
         <div class="footer-container">
             <div class="logo-container">
-                <img src="./jpg/изображение_2025-04-18_152733728.png" alt="Логотип компании">
+                <img src="../assets/images/jpg/изображение_2025-04-18_152733728.png" alt="Логотип компании">
             </div>
             <nav class="footer-menu">
                 <p>Меню</p>
                 <ul>
-                    <li><a href="./main2.html">О Компании</a></li>
-                    <li><a href="./main7.html">Наши проекты</a></li>
-                    <li><a href="./main3.html">Задать вопрос</a></li>
-                    <li><a href="./main6.html">Сертификаты</a></li>
-                    <li><a href="./main4.html">Контакты</a></li>
-                    <li><a href="./main5.html">Услуги</a></li>
+                    <li><a href="./index-page-about-company.html">О компании</a></li>
+                    <li><a href="./index-page-project.html">Наши проекты</a></li>
+                    <li><a href="./index-page-question.html">Задать вопрос</a></li>
+                    <li><a href="./index-page-sertificat.html">Сертификаты</a></li>
+                    <li><a href="./index-page-contacts.html">Контакты</a></li>
+                    <li><a href="./index-page-services.html">Услуги</a></li>
                 </ul>
             </nav>
             <div class="contacts">
@@ -125,7 +129,7 @@
                 </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
 
 </body>
 </html>

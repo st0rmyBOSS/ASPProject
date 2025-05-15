@@ -4,8 +4,8 @@ const mysql = require('mysql2/promise');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const app = express();
+const path = require('path');
 
-// Проверка обязательных переменных окружения
 const requiredEnvVars = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_DATABASE', 'EMAIL_USER', 'EMAIL_PASS', 'EMAIL_TO'];
 requiredEnvVars.forEach(varName => {
     if (!process.env[varName]) {
@@ -24,11 +24,10 @@ const transporter = nodemailer.createTransport({
         pass: process.env.EMAIL_PASS
     },
     tls: {
-        rejectUnauthorized: false  // Для тестов (не для продакшена!)
+        rejectUnauthorized: false 
     }
 });
 
-const path = require('path');
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.json());
@@ -46,10 +45,11 @@ const pool = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
+    database: 'artstroyprojectdb', 
     waitForConnections: true,
     connectionLimit: 10,
-    queueLimit: 0
+    queueLimit: 0,
+    port: 3306 
 });
 
 const checkDatabaseConnection = async () => {
@@ -98,7 +98,7 @@ app.post('/submit', async (req, res) => {
 
         // Сохранение в БД
         const connection = await pool.getConnection();
-        console.log('Успешное подключение к БД');
+        console.log('Отправка успешна!');
 
         const [result] = await connection.execute(
             'INSERT INTO form (name, number, email, question) VALUES (?, ?, ?, ?)',

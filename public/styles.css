@@ -14,7 +14,7 @@ body {
     font-family: var(--main-font);
     min-height: 100vh;
     overflow-x: hidden;
-    background-image: url(./jpg/8b87d3212e5207e16ae07d982fc2ea7b.jpg);
+    background-image: url(../assets/images/jpg/8b87d3212e5207e16ae07d982fc2ea7b.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -40,6 +40,10 @@ img {
 header {
     background-color: #dae4ff;
     padding: 1% 0 2% 0;
+}
+
+header a {
+    width: 20%;
 }
 
 .header-contacts {
@@ -1096,5 +1100,39 @@ animation-fill-mode: both;
     margin-left: 8%;
     margin-top: 3%;
     margin-bottom: 2%;
+}
+
+.projects-box-img {
+    max-width: 100%;
+    width: 20%;
+    margin-left: 8%;
+    margin-top: 3%;
+    margin-bottom: 2%;
+    border-radius: 1vw;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+
+.projects-box-img:hover {
+    transform: scale(1.05);
+}
+
+.project-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 0.5vw;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.image-preview-container img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
