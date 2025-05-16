@@ -24,11 +24,6 @@
             <h2>Редактирование главной страницы</h2>
             
             <div class="form-group">
-                <label for="main-title">Заголовок</label>
-                <input type="text" id="main-title" value="Арт-Строй Проект">
-            </div>
-            
-            <div class="form-group">
                 <label for="company-info">Текст "О компании"</label>
                 <textarea id="company-info">История нашей организации берет свое начало деятельности с 2009 года путем выделения части молодых и перспективных специалистов различной направленности из отдельных филиалов действующего в этот момент «Южного Инженерного Центра Энергетики» ОАО «ЮИЦЭ».</textarea>
             </div>
@@ -181,7 +176,42 @@
             });
         });
 
+        // Функция сохранения данных главной страницы
+    document.getElementById('saveMainBtn').addEventListener('click', function() {
+        const mainData = {
+            companyInfo: document.getElementById('company-info').value,
+            servicesInfo: document.getElementById('services-info').value
+        };
+        localStorage.setItem('mainPageData', JSON.stringify(mainData));
+        alert('Данные главной страницы сохранены!');
+    });
+
+    // Функция сохранения данных страницы "О компании"
+    document.getElementById('saveAboutBtn').addEventListener('click', function() {
+        const aboutData = {
+            text1: document.getElementById('about-text1').value,
+            text2: document.getElementById('about-text2').value,
+            text3: document.getElementById('about-text3').value,
+            text4: document.getElementById('about-text4').value
+        };
+        localStorage.setItem('aboutPageData', JSON.stringify(aboutData));
+        alert('Данные страницы "О компании" сохранены!');
+    });
+
+    // Функция сохранения данных страницы "Услуги"
+    document.getElementById('saveServicesBtn').addEventListener('click', function() {
+        const servicesData = {
+            textLeft: document.getElementById('services-text-left').value,
+            textRight: document.getElementById('services-text-right').value,
+            servicesList: document.getElementById('services-list').value
+        };
+        localStorage.setItem('servicesPageData', JSON.stringify(servicesData));
+        alert('Данные страницы "Услуги" сохранены!');
+    });
+
     </script>
+
+    <script src="./script-panel.js"></script>
 
 </body>
 </html>

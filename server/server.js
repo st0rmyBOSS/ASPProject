@@ -5,7 +5,9 @@ const cors = require('cors');
 const nodemailer = require('nodemailer');
 const app = express();
 const path = require('path');
+const fs = require('fs');
 
+// Проверка обязательных переменных окружения
 const requiredEnvVars = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_DATABASE', 'EMAIL_USER', 'EMAIL_PASS', 'EMAIL_TO'];
 requiredEnvVars.forEach(varName => {
     if (!process.env[varName]) {
@@ -24,9 +26,11 @@ const transporter = nodemailer.createTransport({
         pass: process.env.EMAIL_PASS
     },
     tls: {
-        rejectUnauthorized: false 
+        rejectUnauthorized: false  
     }
 });
+
+const DATA_FILE = path.join(__dirname, 'site-data.json');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -45,11 +49,10 @@ const pool = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: 'artstroyprojectdb', 
+    database: process.env.DB_DATABASE,
     waitForConnections: true,
     connectionLimit: 10,
-    queueLimit: 0,
-    port: 3306 
+    queueLimit: 0
 });
 
 const checkDatabaseConnection = async () => {
@@ -85,6 +88,34 @@ app.get('/index-page-question.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index-page-question.html'));
 });
 
+app.get('/api/data', (req, res) => {
+    fs.readFile(DATA_FILE, 'utf8', (err, data) => {
+        if (err) {
+            // Если файла нет, возвращаем пустой объект
+            return res.json({});
+        }
+        res.json(JSON.parse(data));
+    });
+});
+
+// Сохранение данных 
+app.post('/api/save', (req, res) => {
+    console.log('Получены данные:', req.body); 
+    
+    if (!req.body) {
+        return res.status(400).json({ error: 'Нет данных' });
+    }
+
+    fs.writeFile(DATA_FILE, JSON.stringify(req.body, null, 2), (err) => {
+        if (err) {
+            console.error('Ошибка записи:', err); 
+            return res.status(500).json({ error: 'Ошибка записи файла' });
+        }
+        console.log('Файл успешно записан!'); 
+        res.json({ success: true });
+    });
+});
+
 app.post('/submit', async (req, res) => {
     console.log('Получен запрос:', req.body);
     
@@ -98,7 +129,7 @@ app.post('/submit', async (req, res) => {
 
         // Сохранение в БД
         const connection = await pool.getConnection();
-        console.log('Отправка успешна!');
+        console.log('Успешное подключение к БД');
 
         const [result] = await connection.execute(
             'INSERT INTO form (name, number, email, question) VALUES (?, ?, ?, ?)',

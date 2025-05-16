@@ -1136,3 +1136,18 @@ animation-fill-mode: both;
     border-radius: 4px;
 }
 
+.admin-success-message-panel {
+    background: #d4edda;
+    color: #155724;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 4px;
+  }
+  
+.admin-error-message-panel {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 4px;
+  }
