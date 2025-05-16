@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Админ-панель | Арт-Строй Проект</title>
-    <link rel="stylesheet" href="../public/styles.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
 <body>
     <div class="login-container">
@@ -27,7 +27,7 @@
             // Простые учетные данные для демонстрации
             if (username === 'admin' && password === 'admin') {
                 localStorage.setItem('isAdminAuthenticated', 'true');
-                window.location.href = 'admin-panel.html';
+                window.location.href = 'Admin-panel.html';
             } else {
                 document.getElementById('loginError').textContent = 'Неверный логин или пароль';
             }

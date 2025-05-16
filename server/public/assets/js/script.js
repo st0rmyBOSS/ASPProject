@@ -156,5 +156,37 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
+//add projects
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const response = await fetch('/api/projects');
+      const projects = await response.json();
+      
+      const container = document.getElementById('projectsContainer');
+      container.innerHTML = '';
+      
+      projects.forEach((project, index) => {
+        const animationClass = index % 2 === 0 ? 'slideInLeft' : 'slideInRight';
+        
+        const projectEl = document.createElement('div');
+        projectEl.className = 'project-item';
+        projectEl.setAttribute('data-animation', animationClass);
+        projectEl.innerHTML = `
+          <h2 class="project-name">${project.title}</h2>
+          <p>Выполнение проектной документации – ${project.year_design}</p>
+          <p>Реализация – ${project.year_implementation}</p>
+          <p class="project-description">${project.description}</p>
+          <div class="project-images">
+            ${project.images ? JSON.parse(project.images).map(img => 
+              `<img src="${img}" alt="${project.title}">`).join('') : ''}
+          </div>
+        `;
+        container.appendChild(projectEl);
+      });
+    } catch (error) {
+      console.error('Ошибка загрузки проектов:', error);
+    }
+  });
+
 
 

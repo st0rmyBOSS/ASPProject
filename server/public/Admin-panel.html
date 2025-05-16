@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Админ-панель | Арт-Строй Проект</title>
-    <link rel="stylesheet" href="../public/styles.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
 <body>
     <div class="admin-container">
@@ -17,6 +17,7 @@
             <div class="admin-tab active" data-tab="main">Главная страница</div>
             <div class="admin-tab" data-tab="about">О компании</div>
             <div class="admin-tab" data-tab="projects">Наши проекты</div>
+            <div class="admin-tab" data-tab="projects-management">Управление проектами</div>
             <div class="admin-tab" data-tab="services">Услуги</div>
         </div>
         
@@ -104,9 +105,63 @@
                 <label for="project-text-8">Текст блока 8</label>
                 <textarea id="project-text-8">Краткое описание объекта. Участок тепловой сети прокладывается в г. Волгодонске по ул. Академика Королева. Собственность – ООО «Волгодонские тепловые сети». Предназначены для теплоснабжения жилых и коммунально-бытовых потребителей «Нового» района города общей протяженностью 446,7тр.м. Диаметр трубопроводов – Ду400. Трубы стальные с тепловой изоляцией из ППУ с защитной оболочкой из ПЭ с применением системы ОДК. Присоединительная мощность – 3,06 Гкал/час. Система теплоснабжения – двухтрубная, работающая по температурному графику 104/59℃ с рабочим давлением в системе 1,6 МПа. Способ прокладки – канальный с использованием сборных ж/б элементов.</textarea>
             </div>
-            
+
             <button class="save-btn" id="saveProjectsBtn">Сохранить</button>
         
+        </div>
+
+        <div class="tab-content" id="projects-management-tab">
+            <h2>Управление проектами</h2>
+            
+            <div class="projects-management-container">
+                <div class="projects-list-container">
+                    <h3>Список проектов</h3>
+                    <div class="projects-list" id="projectsList">
+                        <!-- Проекты будут загружаться здесь -->
+                    </div>
+                    <button class="add-project-btn" id="addProjectBtn">+ Добавить проект</button>
+                </div>
+                
+                <div class="project-editor-container" id="projectEditorContainer" style="display:none;">
+                    <h3>Редактирование проекта</h3>
+                    <form id="projectForm">
+                        <input type="hidden" id="projectId">
+                        
+                        <div class="form-group">
+                            <label for="projectTitle">Название проекта</label>
+                            <input type="text" id="projectTitle" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="projectYearDesign">Год проектирования</label>
+                            <input type="text" id="projectYearDesign">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="projectYearImplementation">Год реализации</label>
+                            <input type="text" id="projectYearImplementation">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="projectDescription">Описание</label>
+                            <textarea id="projectDescription" rows="5" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="projectImages">Изображения (макс. 5)</label>
+                            <input type="file" id="projectImages" multiple accept="image/*">
+                            <div class="images-preview" id="imagesPreview"></div>
+                            <div class="existing-images" id="existingImages"></div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="cancel-btn" id="cancelProjectBtn">Отмена</button>
+                            <button type="submit" class="save-btn">Сохранить</button>
+                            <button type="button" class="delete-btn" id="deleteProjectBtn">Удалить проект</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         
         <div class="tab-content" id="services-tab">
@@ -158,13 +213,13 @@
     <script>
         // Проверка аутентификации
         if (!localStorage.getItem('isAdminAuthenticated')) {
-            window.location.href = 'admin-login.html';
+            window.location.href = 'Admin-login.html';
         }
         
         // Выход из системы
         document.getElementById('logoutBtn').addEventListener('click', function() {
             localStorage.removeItem('isAdminAuthenticated');
-            window.location.href = 'admin-login.html';
+            window.location.href = 'Admin-login.html';
         });
         
         // Переключение вкладок

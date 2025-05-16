@@ -6,6 +6,10 @@ const nodemailer = require('nodemailer');
 const app = express();
 const path = require('path');
 const fs = require('fs');
+const multer = require('multer');
+const upload = multer({ dest: 'public/uploads/' });
+
+// Не забудьте создать папку public/uploads
 
 // Проверка обязательных переменных окружения
 const requiredEnvVars = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_DATABASE', 'EMAIL_USER', 'EMAIL_PASS', 'EMAIL_TO'];
@@ -342,6 +346,87 @@ app.post('/submit', async (req, res) => {
         });
     }
 });
+
+// Получение всех проектов
+app.get('/api/projects', async (req, res) => {
+    try {
+      const connection = await pool.getConnection();
+      const [rows] = await connection.query('SELECT * FROM projects ORDER BY created_at DESC');
+      connection.release();
+      res.json(rows);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
+  // Добавление/обновление проекта
+  app.post('/api/projects/save', upload.array('images', 5), async (req, res) => {
+    try {
+      const { id, title, description, year_design, year_implementation } = req.body;
+      const images = req.files?.map(file => `/uploads/${file.filename}`) || JSON.parse(req.body.existingImages || '[]');
+      
+      const connection = await pool.getConnection();
+      
+      if (id) {
+        await connection.execute(
+          'UPDATE projects SET title=?, description=?, year_design=?, year_implementation=?, images=? WHERE id=?',
+          [title, description, year_design, year_implementation, JSON.stringify(images), id]
+        );
+      } else {
+        await connection.execute(
+          'INSERT INTO projects (title, description, year_design, year_implementation, images) VALUES (?, ?, ?, ?, ?)',
+          [title, description, year_design, year_implementation, JSON.stringify(images)]
+        );
+      }
+      
+      connection.release();
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
+  // Удаление проекта
+  app.post('/api/projects/delete', async (req, res) => {
+    try {
+      const { id } = req.body;
+      const connection = await pool.getConnection();
+      await connection.execute('DELETE FROM projects WHERE id=?', [id]);
+      connection.release();
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.post('/api/projects/save', upload.array('images', 5), async (req, res) => {
+    try {
+      const { id, title, description, year_design, year_implementation } = req.body;
+      const images = req.files?.map(file => `/uploads/${file.filename}`) || JSON.parse(req.body.existingImages || '[]');
+      
+      const connection = await pool.getConnection();
+      
+      if (id) {
+        await connection.execute(
+          'UPDATE projects SET title=?, description=?, year_design=?, year_implementation=?, images=? WHERE id=?',
+          [title, description, year_design, year_implementation, JSON.stringify(images), id]
+        );
+        console.log(`🔄 Проект "${title}" (ID: ${id}) обновлен.`);
+      } else {
+        const [result] = await connection.execute(
+          'INSERT INTO projects (title, description, year_design, year_implementation, images) VALUES (?, ?, ?, ?, ?)',
+          [title, description, year_design, year_implementation, JSON.stringify(images)]
+        );
+        console.log(`✅ Проект "${title}" (ID: ${result.insertId}) сохранен.`);
+      }
+      
+      connection.release();
+      res.json({ success: true });
+    } catch (error) {
+      console.error('❌ Ошибка сохранения проекта:', error.message);
+      res.status(500).json({ error: error.message });
+    }
+  });
 
 const PORT = process.env.PORT || 3000;
 

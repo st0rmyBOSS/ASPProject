@@ -185,3 +185,160 @@ document.getElementById('saveServicesBtn').addEventListener('click', async () =>
     }
 });
 
+// Загрузка проектов при открытии вкладки
+document.querySelector('.admin-tab[data-tab="projects-management"]').addEventListener('click', loadProjects);
+
+// Инициализация редактора проектов
+document.getElementById('addProjectBtn').addEventListener('click', () => openProjectEditor(null));
+document.getElementById('cancelProjectBtn').addEventListener('click', closeProjectEditor);
+document.getElementById('deleteProjectBtn').addEventListener('click', deleteProject);
+document.getElementById('projectForm').addEventListener('submit', saveProject);
+
+// Предпросмотр изображений
+document.getElementById('projectImages').addEventListener('change', function() {
+    const preview = document.getElementById('imagesPreview');
+    preview.innerHTML = '';
+    
+    Array.from(this.files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.innerHTML += `<img src="${e.target.result}">`;
+        }
+        reader.readAsDataURL(file);
+    });
+});
+
+// Загрузка проектов
+async function loadProjects() {
+    try {
+        const response = await fetch('http://localhost:3000/api/projects');
+        const projects = await response.json();
+        
+        const container = document.getElementById('projectsList');
+        container.innerHTML = '';
+        
+        projects.forEach(project => {
+            const projectEl = document.createElement('div');
+            projectEl.className = 'project-item';
+            projectEl.innerHTML = `
+                <h4>${project.title}</h4>
+                <p>${project.description.substring(0, 100)}...</p>
+                <button class="edit-btn" data-id="${project.id}">Редактировать</button>
+            `;
+            container.appendChild(projectEl);
+            
+            projectEl.querySelector('.edit-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                openProjectEditor(project.id);
+            });
+        });
+    } catch (error) {
+        console.error('Ошибка загрузки проектов:', error);
+    }
+}
+
+async function openProjectEditor(projectId) {
+    if (projectId) {
+        try {
+            const response = await fetch(`http://localhost:3000/api/projects/${id}`);
+            const project = await response.json();
+            
+            document.getElementById('projectId').value = project.id;
+            document.getElementById('projectTitle').value = project.title;
+            document.getElementById('projectDescription').value = project.description;
+            document.getElementById('projectYearDesign').value = project.year_design;
+            document.getElementById('projectYearImplementation').value = project.year_implementation;
+            
+            // Загрузка существующих изображений
+            const existingImages = document.getElementById('existingImages');
+            existingImages.innerHTML = '';
+            if (project.images && project.images.length > 0) {
+                project.images.forEach(img => {
+                    existingImages.innerHTML += `
+                        <div class="existing-image">
+                            <img src="${img}">
+                            <input type="hidden" name="existingImages" value="${img}">
+                            <button type="button" class="remove-image-btn">×</button>
+                        </div>
+                    `;
+                });
+            }
+            
+            document.getElementById('deleteProjectBtn').style.display = 'inline-block';
+        } catch (error) {
+            console.error('Ошибка загрузки проекта:', error);
+        }
+    } else {
+        document.getElementById('projectForm').reset();
+        document.getElementById('existingImages').innerHTML = '';
+        document.getElementById('deleteProjectBtn').style.display = 'none';
+    }
+    
+    document.getElementById('projectsList').style.display = 'none';
+    document.getElementById('addProjectBtn').style.display = 'none';
+    document.getElementById('projectEditorContainer').style.display = 'block';
+}
+
+function closeProjectEditor() {
+    document.getElementById('projectsList').style.display = 'block';
+    document.getElementById('addProjectBtn').style.display = 'block';
+    document.getElementById('projectEditorContainer').style.display = 'none';
+    document.getElementById('projectForm').reset();
+    document.getElementById('imagesPreview').innerHTML = '';
+}
+
+async function saveProject(e) {
+    e.preventDefault();
+    
+    const formData = new FormData();
+    formData.append('id', document.getElementById('projectId').value);
+    formData.append('title', document.getElementById('projectTitle').value);
+    formData.append('description', document.getElementById('projectDescription').value);
+    formData.append('year_design', document.getElementById('projectYearDesign').value);
+    formData.append('year_implementation', document.getElementById('projectYearImplementation').value);
+    
+    // Существующие изображения
+    const existingImages = Array.from(document.querySelectorAll('input[name="existingImages"]')).map(i => i.value);
+    formData.append('existingImages', JSON.stringify(existingImages));
+    
+    // Новые изображения
+    const files = document.getElementById('projectImages').files;
+    for (let i = 0; i < files.length; i++) {
+      formData.append('images', files[i]);
+    }
+    
+    try {
+      const response = await fetch('http://localhost:3000/api/projects/save', {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (response.ok) {
+        console.log('✅ Проект успешно сохранен в БД!');
+        loadProjects(); // Обновляем список в админ-панели
+        closeProjectEditor();
+      }
+    } catch (error) {
+      console.error('Ошибка сохранения проекта:', error);
+    }
+  }
+
+async function deleteProject() {
+    if (confirm('Вы уверены, что хотите удалить этот проект?')) {
+        try {
+            const response = await fetch('http://localhost:3000/api/projects/delete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: document.getElementById('projectId').value })
+            });
+            
+            if (response.ok) {
+                loadProjects();
+                closeProjectEditor();
+            }
+        } catch (error) {
+            console.error('Ошибка удаления проекта:', error);
+        }
+    }
+}
+
