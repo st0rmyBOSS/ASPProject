@@ -79,11 +79,36 @@ function showMessage(type, text) {
 // Admin
 async function loadData() {
   try {
-      const response = await fetch('/api/data');
-      return await response.json();
+      // Пробуем загрузить из MySQL
+      const [mainRes, aboutRes, projectsRes, servicesRes] = await Promise.all([
+          fetch('/api/data/main').then(res => res.json()),
+          fetch('/api/data/about').then(res => res.json()),
+          fetch('/api/data/projects').then(res => res.json()),
+          fetch('/api/data/services').then(res => res.json())
+      ]);
+
+      // Если в MySQL нет данных, загружаем из JSON
+      if (!mainRes || Object.keys(mainRes).length === 0) {
+          const jsonRes = await fetch('/api/site-data.json').then(res => res.json());
+          return jsonRes;
+      }
+
+      return {
+          main: mainRes,
+          about: aboutRes,
+          projects: projectsRes,
+          services: servicesRes
+      };
   } catch (error) {
       console.error('Ошибка загрузки данных:', error);
-      return {};
+      // Если ошибка, пробуем загрузить из JSON
+      try {
+          const jsonRes = await fetch('/api/site-data.json').then(res => res.json());
+          return jsonRes;
+      } catch (jsonError) {
+          console.error('Ошибка загрузки из JSON:', jsonError);
+          return {};
+      }
   }
 }
 
@@ -96,7 +121,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
-//about-company.html
+//company.html
 document.addEventListener('DOMContentLoaded', async () => {
   const data = await loadData();
   if (data.about) {
@@ -108,7 +133,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
-//about-company.html
+//projects.html
+document.addEventListener('DOMContentLoaded', async () => {
+  const data = await loadData();
+  if (data.projects) {
+      for (let i = 1; i <= 8; i++) {
+          const element = document.querySelector(`.project-text-${i}`);
+          if (element && data.projects[`text${i}`]) {
+              element.textContent = data.projects[`text${i}`];
+          }
+      }
+  }
+});
+
+//services.html
 document.addEventListener('DOMContentLoaded', async () => {
   const data = await loadData();
   if (data.services) {
