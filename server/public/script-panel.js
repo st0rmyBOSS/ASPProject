@@ -172,7 +172,7 @@ document.getElementById('saveMainBtn').addEventListener('click', async () => {
         });
         
         const result = await response.json();
-        alert(result.success ? 'Данные сохранены в БД и JSON!' : '❌ Ошибка сохранения!');
+        alert(result.success ? 'Данные сохранены в БД и JSON!' : 'Ошибка сохранения!');
     } catch (error) {
         console.error('Ошибка:', error);
         alert('Не удалось сохранить! Проверьте консоль.');
@@ -283,6 +283,14 @@ document.getElementById('projectImages').addEventListener('change', function() {
     });
 });
 
+function closeProjectEditor() {
+    document.getElementById('projectsList').style.display = 'block';
+    document.getElementById('addProjectBtn').style.display = 'block';
+    document.getElementById('projectEditorContainer').style.display = 'none';
+    document.getElementById('projectForm').reset();
+    document.getElementById('imagesPreview').innerHTML = '';
+}
+
 // Загрузка проектов
 async function loadProjects() {
     console.log("Загрузка проектов...");
@@ -318,7 +326,7 @@ async function loadProjects() {
             
             projectEl.querySelector('.edit-btn').addEventListener('click', (e) => {
                 e.stopPropagation();
-                openProjectEditor(project);
+                openProjectEditor(project); 
             });
         });
     } catch (error) {
@@ -330,12 +338,9 @@ async function loadProjects() {
     }
 }
 
-async function openProjectEditor(projectId) {
-    if (projectId) {
+async function openProjectEditor(project) {
+    if (project) {
         try {
-            const response = await fetch(`http://localhost:3000/api/projects/${id}`);
-            const project = await response.json();
-            
             document.getElementById('projectId').value = project.id;
             document.getElementById('projectTitle').value = project.title;
             document.getElementById('projectDescription').value = project.description;
@@ -370,14 +375,6 @@ async function openProjectEditor(projectId) {
     document.getElementById('projectsList').style.display = 'none';
     document.getElementById('addProjectBtn').style.display = 'none';
     document.getElementById('projectEditorContainer').style.display = 'block';
-}
-
-function closeProjectEditor() {
-    document.getElementById('projectsList').style.display = 'block';
-    document.getElementById('addProjectBtn').style.display = 'block';
-    document.getElementById('projectEditorContainer').style.display = 'none';
-    document.getElementById('projectForm').reset();
-    document.getElementById('imagesPreview').innerHTML = '';
 }
 
 async function saveProject(e) {

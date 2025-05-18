@@ -168,8 +168,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     dynamicProjects.forEach((project, index) => {
         const animationClass = index % 2 === 0 ? 'slideInLeft' : 'slideInRight';
-        const images = project.images ? JSON.parse(project.images) : [];
-
+        
+        // 1. Исправляем парсинг изображений
+        let images = [];
+        try {
+            // Если images уже массив (например, из API) или null/undefined
+            if (Array.isArray(project.images)) {
+                images = project.images;
+            } 
+            // Если images - строка с JSON (например, "["/uploads/image1.jpg"]")
+            else if (typeof project.images === 'string') {
+                images = JSON.parse(project.images);
+            }
+        } catch (e) {
+            console.error('Ошибка парсинга изображений:', e);
+            images = [];
+        }
+    
+        // 2. Создаем HTML-структуру
         const projectEl = document.createElement('div');
         projectEl.className = 'project-item';
         projectEl.setAttribute('data-animation', animationClass);
@@ -179,7 +195,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             ${project.year_implementation ? `<p>Реализация – ${project.year_implementation}</p>` : ''}
             <p class="project-description">${project.description || ''}</p>
             <div class="project-images">
-                ${images.map(img => `<img src="${img}" alt="${project.title}" class="project-image">`).join('')}
+                ${images.map(img => `
+                    <img src="${img}" alt="${project.title}" class="project-image">
+                `).join('')}
             </div>
         `;
         container.appendChild(projectEl);

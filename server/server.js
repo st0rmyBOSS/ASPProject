@@ -341,48 +341,66 @@ app.get('/api/projects', async (req, res) => {
         connection.release();
         
         const projects = rows.map(row => {
-            try {
-                return {
-                    ...row,
-                    images: row.images ? JSON.parse(row.images) : []
-                };
-            } catch (e) {
-                console.error(`Ошибка парсинга изображений для проекта ${row.id}:`, e);
-                return {
-                    ...row,
-                    images: []
-                };
+            let images = [];
+            if (typeof row.images === 'string') {
+                if (row.images.startsWith('/uploads/')) {
+                    images = [row.images]; // Преобразуем в массив
+                } else if (row.images.startsWith('[')) {
+                    try {
+                        images = JSON.parse(row.images); // Парсим JSON
+                    } catch (e) {
+                        console.error(`Ошибка парсинга изображений (ID ${row.id}):`, e);
+                        images = [];
+                    }
+                }
             }
+            
+            return {
+                ...row,
+                images: Array.isArray(images) ? images : [] // Гарантируем массив
+            };
         });
         
         res.json(projects);
     } catch (error) {
-        console.error('Ошибка при загрузке проектов:', error);
-        res.status(500).json({ 
-            error: 'Не удалось загрузить проекты',
-            details: error.message 
-        });
+        console.error('Ошибка загрузки проектов:', error);
+        res.status(500).json({ error: 'Не удалось загрузить проекты' });
     }
 });
 
 // Добавление/обновление проекта
-app.post('/api/projects', upload.array('images', 5), async (req, res) => {
+app.post('/api/projects/save', upload.array('images', 5), async (req, res) => {
     try {
         const { id, title, description, year_design, year_implementation, existingImages } = req.body;
         
+        let existingImagesArray = [];
+        if (existingImages) {
+            try {
+                existingImagesArray = JSON.parse(existingImages);
+                if (!Array.isArray(existingImagesArray)) {
+                    existingImagesArray = [];
+                }
+            } catch (e) {
+                console.error('Ошибка парсинга existingImages:', e);
+                existingImagesArray = [];
+            }
+        }
+        
         const newImages = req.files?.map(file => `/uploads/${file.filename}`) || [];
-        const allImages = [...JSON.parse(existingImages || '[]'), ...newImages];
+        const allImages = [...existingImagesArray, ...newImages];
+        
+        const imagesJson = JSON.stringify(allImages);
         
         if (id) {
             await pool.execute(
                 'UPDATE projects SET title=?, description=?, year_design=?, year_implementation=?, images=? WHERE id=?',
-                [title, description, year_design, year_implementation, JSON.stringify(allImages), id]
+                [title, description, year_design, year_implementation, imagesJson, id]
             );
-            res.json({ success: true, message: 'Проект обновлен' });
+            res.json({ success: true });
         } else {
             const [result] = await pool.execute(
                 'INSERT INTO projects (title, description, year_design, year_implementation, images) VALUES (?, ?, ?, ?, ?)',
-                [title, description, year_design, year_implementation, JSON.stringify(allImages)]
+                [title, description, year_design, year_implementation, imagesJson]
             );
             res.json({ success: true, id: result.insertId });
         }
@@ -393,7 +411,7 @@ app.post('/api/projects', upload.array('images', 5), async (req, res) => {
 });
   
   // Удаление проекта
-  app.post('/api/projects/delete', async (req, res) => {
+app.post('/api/projects/delete', async (req, res) => {
     try {
       const { id } = req.body;
       const connection = await pool.getConnection();
@@ -405,7 +423,7 @@ app.post('/api/projects', upload.array('images', 5), async (req, res) => {
     }
   });
 
-  app.post('/api/projects/save', upload.array('images', 5), async (req, res) => {
+app.post('/api/projects/save', upload.array('images', 5), async (req, res) => {
     try {
         const { id, title, description, year_design, year_implementation, existingImages } = req.body;
         
