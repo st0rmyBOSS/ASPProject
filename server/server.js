@@ -7,7 +7,13 @@ const app = express();
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
-const upload = multer({ dest: 'public/uploads/' });
+const upload = multer({ 
+    dest: 'public/uploads/',
+    limits: { fileSize: 5 * 1024 * 1024, files: 3 } // 5MB max per file, max 3 files
+  });
+
+// Добавьте это перед другими middleware
+app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -342,22 +348,19 @@ app.get('/api/projects', async (req, res) => {
         
         const projects = rows.map(row => {
             let images = [];
-            if (typeof row.images === 'string') {
-                if (row.images.startsWith('/uploads/')) {
-                    images = [row.images]; 
-                } else if (row.images.startsWith('[')) {
-                    try {
-                        images = JSON.parse(row.images); 
-                    } catch (e) {
-                        console.error(`Ошибка парсинга изображений (ID ${row.id}):`, e);
-                        images = [];
-                    }
+            try {
+                if (row.images) {
+                    images = typeof row.images === 'string' ? JSON.parse(row.images) : row.images;
                 }
+                if (!Array.isArray(images)) images = [];
+            } catch (e) {
+                console.error(`Ошибка парсинга изображений (ID ${row.id}):`, e);
+                images = [];
             }
             
             return {
                 ...row,
-                images: Array.isArray(images) ? images : [] 
+                images: images.map(img => img.startsWith('/') ? img : `/uploads/${img}`)
             };
         });
         
@@ -369,7 +372,8 @@ app.get('/api/projects', async (req, res) => {
 });
 
 // Добавление/обновление проекта
-app.post('/api/projects/save', upload.array('images', 5), async (req, res) => {
+app.post('/api/projects/save', upload.array('images', 3), async (req, res) => {
+    console.log('Загруженные файлы:', req.files);
     try {
         const { id, title, description, year_design, year_implementation, existingImages } = req.body;
         
@@ -387,7 +391,7 @@ app.post('/api/projects/save', upload.array('images', 5), async (req, res) => {
         }
         
         const newImages = req.files?.map(file => `/uploads/${file.filename}`) || [];
-        const allImages = [...existingImagesArray, ...newImages];
+        const allImages = [...existingImagesArray, ...newImages].slice(0, 3);
         
         const imagesJson = JSON.stringify(allImages);
         

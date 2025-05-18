@@ -273,15 +273,23 @@ document.getElementById('projectForm').addEventListener('submit', saveProject);
 document.getElementById('projectImages').addEventListener('change', function() {
     const preview = document.getElementById('imagesPreview');
     preview.innerHTML = '';
+
+    const files = Array.from(this.files).slice(0, 3);
     
-    Array.from(this.files).forEach(file => {
+    files.forEach(file => {
         const reader = new FileReader();
         reader.onload = function(e) {
-            preview.innerHTML += `<img src="${e.target.result}">`;
+            preview.innerHTML += `<img src="${e.target.result}" style="max-width: 100px; margin: 5px;">`;
         }
         reader.readAsDataURL(file);
     });
+
+    if (this.files.length > 3) {
+        alert('Максимальное количество изображений - 3. Будут загружены только первые 3.');
+        this.files = Array.from(this.files).slice(0, 3);
+    }
 });
+
 
 function closeProjectEditor() {
     document.getElementById('projectsList').style.display = 'block';
@@ -378,6 +386,12 @@ async function openProjectEditor(project) {
 
 async function saveProject(e) {
     e.preventDefault();
+
+    const files = document.getElementById('projectImages').files;
+    if (files.length > 3) {
+        alert('Максимальное количество изображений - 3');
+        return;
+    }
     
     const title = document.getElementById('projectTitle').value.trim();
     if (!title) {

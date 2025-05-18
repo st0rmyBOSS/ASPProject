@@ -171,20 +171,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         let images = [];
         try {
-            if (Array.isArray(project.images)) {
-                images = project.images;
-            } 
-            else if (typeof project.images === 'string') {
-                images = JSON.parse(project.images);
+            if (project.images) {
+                images = typeof project.images === 'string' ? JSON.parse(project.images) : project.images;
+                if (!Array.isArray(images)) images = [];
             }
         } catch (e) {
             console.error('Ошибка парсинга изображений:', e);
             images = [];
         }
+        
+        images = images.map(img => img.startsWith('/uploads/') ? img : `/uploads/${img}`);
     
         const projectEl = document.createElement('div');
         projectEl.className = 'project-item';
         projectEl.setAttribute('data-animation', animationClass);
+
         projectEl.innerHTML = `
             <h2 class="project-name">${project.title || 'Без названия'}</h2>
             ${project.year_design ? `<p>Выполнение проектной документации – ${project.year_design}</p>` : ''}

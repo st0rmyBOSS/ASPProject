@@ -859,6 +859,14 @@ button:hover, .button-form-input:hover, .save-btn:hover {
     margin: 15px 0;
 }
 
+#dynamicProjects .project-images {
+    text-align: center;
+    max-width: 100%;
+    width: 100%;
+    margin-top: 3%;
+    margin-bottom: 2%;
+}
+
 #projectsList {
     background-color: #e4e4e4;
     padding: 15px;
@@ -904,19 +912,6 @@ button:hover, .button-form-input:hover, .save-btn:hover {
 .project-description {
     margin: 15px 0;
     line-height: 1.6;
-}
-
-.project-images {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.project-images img {
-    max-width: 300px;
-    height: auto;
-    border-radius: 4px;
 }
 
 /* --- 1200px и меньше: планшеты, небольшие ноутбуки --- */
@@ -992,6 +987,7 @@ button:hover, .button-form-input:hover, .save-btn:hover {
         margin: 2% auto;
         font-size: 3vw;
     }
+    #dynamicProjects .project-name {font-size: 3vw;}
     .Company-img1, .Company-img2 {
         position: static;
         width: 90%;
@@ -1068,6 +1064,7 @@ button:hover, .button-form-input:hover, .save-btn:hover {
     header {padding: 1% 0 5% 0;}
     .burger {margin-top: -4%;}
     .Company, .projects, .Company2, .project, .friend, .services, .contacts-cont, .sertificat, .Company-derector, .company-str, .form-question { font-size: 7vw; }
+    #dynamicProjects .project-name {font-size: 4vw;}
     .company-info, .company-info2, .Company-img1, .Company-img2, .infoP, .infoP2 { width: 90%; margin-left: 5%; margin-top: 3%; font-size: 4vw; }
     .company-first, .company-second { width: 100%; margin-left: 0; border-radius: 4vw; }
     .section-box-project, .friend-box-color { max-width: 80%; margin-left: 10%; border-radius: 5vw; }
