@@ -344,10 +344,10 @@ app.get('/api/projects', async (req, res) => {
             let images = [];
             if (typeof row.images === 'string') {
                 if (row.images.startsWith('/uploads/')) {
-                    images = [row.images]; // Преобразуем в массив
+                    images = [row.images]; 
                 } else if (row.images.startsWith('[')) {
                     try {
-                        images = JSON.parse(row.images); // Парсим JSON
+                        images = JSON.parse(row.images); 
                     } catch (e) {
                         console.error(`Ошибка парсинга изображений (ID ${row.id}):`, e);
                         images = [];
@@ -357,7 +357,7 @@ app.get('/api/projects', async (req, res) => {
             
             return {
                 ...row,
-                images: Array.isArray(images) ? images : [] // Гарантируем массив
+                images: Array.isArray(images) ? images : [] 
             };
         });
         

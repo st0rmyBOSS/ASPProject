@@ -347,7 +347,6 @@ async function openProjectEditor(project) {
             document.getElementById('projectYearDesign').value = project.year_design;
             document.getElementById('projectYearImplementation').value = project.year_implementation;
             
-            // Загрузка существующих изображений
             const existingImages = document.getElementById('existingImages');
             existingImages.innerHTML = '';
             if (project.images && project.images.length > 0) {

@@ -169,14 +169,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     dynamicProjects.forEach((project, index) => {
         const animationClass = index % 2 === 0 ? 'slideInLeft' : 'slideInRight';
         
-        // 1. Исправляем парсинг изображений
         let images = [];
         try {
-            // Если images уже массив (например, из API) или null/undefined
             if (Array.isArray(project.images)) {
                 images = project.images;
             } 
-            // Если images - строка с JSON (например, "["/uploads/image1.jpg"]")
             else if (typeof project.images === 'string') {
                 images = JSON.parse(project.images);
             }
@@ -185,7 +182,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             images = [];
         }
     
-        // 2. Создаем HTML-структуру
         const projectEl = document.createElement('div');
         projectEl.className = 'project-item';
         projectEl.setAttribute('data-animation', animationClass);
@@ -203,7 +199,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         container.appendChild(projectEl);
     });
 
-    // Инициализация анимации
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
