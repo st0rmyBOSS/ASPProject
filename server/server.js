@@ -9,7 +9,18 @@ const fs = require('fs');
 const multer = require('multer');
 const upload = multer({ dest: 'public/uploads/' });
 
-// Не забудьте создать папку public/uploads
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: true }));
+
+app.use(cors());
+
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+});
 
 // Проверка обязательных переменных окружения
 const requiredEnvVars = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_DATABASE', 'EMAIL_USER', 'EMAIL_PASS', 'EMAIL_TO'];
@@ -36,19 +47,6 @@ const transporter = nodemailer.createTransport({
 
 const DATA_FILE = path.join(__dirname, 'site-data.json');
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.use(cors({
-    origin: (origin, callback) => {
-        callback(null, true)
-      },
-    methods: ['GET', 'POST'],
-    credentials: true, allowedHeaders: ['Content-Type']
-}));
-
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -62,10 +60,10 @@ const pool = mysql.createPool({
 const checkDatabaseConnection = async () => {
     try {
         const connection = await pool.getConnection();
-        console.log('✅ Успешное подключение к MySQL');
+        console.log('Успешное подключение к MySQL');
         connection.release();
     } catch (error) {
-        console.error('❌ Ошибка подключения к MySQL:', error.message);
+        console.error('Ошибка подключения к MySQL:', error.message);
         process.exit(1);
     }
 };
@@ -74,7 +72,6 @@ const checkDatabaseConnection = async () => {
 async function saveMainToDB(data) {
     const connection = await pool.getConnection();
     try {
-        // Вставляем новые данные
         await connection.execute(
             'INSERT INTO main_page (company_info, services_info) VALUES (?, ?)',
             [data.companyInfo, data.servicesInfo]
@@ -164,28 +161,22 @@ async function loadServicesFromDB() {
     }
 }
 
-async function initializeDatabase() {
+app.get('/api/alldata', async (req, res) => {
     try {
-        const data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+        const [main] = await pool.query('SELECT * FROM main_page ORDER BY id DESC LIMIT 1');
+        const [about] = await pool.query('SELECT * FROM about_page ORDER BY id DESC LIMIT 1');
+        const [projects] = await pool.query('SELECT * FROM projects_page ORDER BY id DESC LIMIT 1');
+        const [services] = await pool.query('SELECT * FROM services_page ORDER BY id DESC LIMIT 1');
         
-        if (data.main) await saveMainToDB(data.main);
-        if (data.about) await saveAboutToDB(data.about);
-        if (data.projects) await saveProjectsToDB(data.projects);
-        if (data.services) await saveServicesToDB(data.services);
-        
-        console.log('База данных инициализирована данными из JSON');
+        res.json({
+            main: main[0] || null,
+            about: about[0] || null,
+            projects: projects[0] || null,
+            services: services[0] || null
+        });
     } catch (error) {
-        console.log('Не удалось инициализировать БД из JSON:', error.message);
+        res.status(500).json({ error: error.message });
     }
-}
-
-// Вызовите эту функцию после подключения к БД
-checkDatabaseConnection().then(async () => {
-    await initializeDatabase();
-    
-    app.listen(PORT, () => {
-        console.log(`\n🚀 Сервер запущен на порту ${PORT}`);
-    });
 });
 
 app.get('/api/data/main', async (req, res) => {
@@ -249,7 +240,6 @@ app.get('/index-page-question.html', (req, res) => {
 app.get('/api/data', (req, res) => {
     fs.readFile(DATA_FILE, 'utf8', (err, data) => {
         if (err) {
-            // Если файла нет, возвращаем пустой объект
             return res.json({});
         }
         res.json(JSON.parse(data));
@@ -265,10 +255,8 @@ app.post('/api/save', async (req, res) => {
     }
 
     try {
-        // Сохраняем в JSON
         fs.writeFileSync(DATA_FILE, JSON.stringify(req.body, null, 2));
         
-        // Сохраняем в MySQL в зависимости от типа данных
         if (req.body.main) {
             await saveMainToDB(req.body.main);
         } else if (req.body.about) {
@@ -298,7 +286,6 @@ app.post('/submit', async (req, res) => {
             return res.status(400).json({ error: 'Все поля обязательны' });
         }
 
-        // Сохранение в БД
         const connection = await pool.getConnection();
         console.log('Успешное подключение к БД');
 
@@ -310,7 +297,6 @@ app.post('/submit', async (req, res) => {
         connection.release();
         console.log('Данные сохранены, ID:', result.insertId);
 
-        // Отправка письма
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: process.env.EMAIL_TO,
@@ -350,41 +336,61 @@ app.post('/submit', async (req, res) => {
 // Получение всех проектов
 app.get('/api/projects', async (req, res) => {
     try {
-      const connection = await pool.getConnection();
-      const [rows] = await connection.query('SELECT * FROM projects ORDER BY created_at DESC');
-      connection.release();
-      res.json(rows);
+        const connection = await pool.getConnection();
+        const [rows] = await connection.query('SELECT * FROM projects ORDER BY created_at DESC');
+        connection.release();
+        
+        const projects = rows.map(row => {
+            try {
+                return {
+                    ...row,
+                    images: row.images ? JSON.parse(row.images) : []
+                };
+            } catch (e) {
+                console.error(`Ошибка парсинга изображений для проекта ${row.id}:`, e);
+                return {
+                    ...row,
+                    images: []
+                };
+            }
+        });
+        
+        res.json(projects);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        console.error('Ошибка при загрузке проектов:', error);
+        res.status(500).json({ 
+            error: 'Не удалось загрузить проекты',
+            details: error.message 
+        });
     }
-  });
-  
-  // Добавление/обновление проекта
-  app.post('/api/projects/save', upload.array('images', 5), async (req, res) => {
+});
+
+// Добавление/обновление проекта
+app.post('/api/projects', upload.array('images', 5), async (req, res) => {
     try {
-      const { id, title, description, year_design, year_implementation } = req.body;
-      const images = req.files?.map(file => `/uploads/${file.filename}`) || JSON.parse(req.body.existingImages || '[]');
-      
-      const connection = await pool.getConnection();
-      
-      if (id) {
-        await connection.execute(
-          'UPDATE projects SET title=?, description=?, year_design=?, year_implementation=?, images=? WHERE id=?',
-          [title, description, year_design, year_implementation, JSON.stringify(images), id]
-        );
-      } else {
-        await connection.execute(
-          'INSERT INTO projects (title, description, year_design, year_implementation, images) VALUES (?, ?, ?, ?, ?)',
-          [title, description, year_design, year_implementation, JSON.stringify(images)]
-        );
-      }
-      
-      connection.release();
-      res.json({ success: true });
+        const { id, title, description, year_design, year_implementation, existingImages } = req.body;
+        
+        const newImages = req.files?.map(file => `/uploads/${file.filename}`) || [];
+        const allImages = [...JSON.parse(existingImages || '[]'), ...newImages];
+        
+        if (id) {
+            await pool.execute(
+                'UPDATE projects SET title=?, description=?, year_design=?, year_implementation=?, images=? WHERE id=?',
+                [title, description, year_design, year_implementation, JSON.stringify(allImages), id]
+            );
+            res.json({ success: true, message: 'Проект обновлен' });
+        } else {
+            const [result] = await pool.execute(
+                'INSERT INTO projects (title, description, year_design, year_implementation, images) VALUES (?, ?, ?, ?, ?)',
+                [title, description, year_design, year_implementation, JSON.stringify(allImages)]
+            );
+            res.json({ success: true, id: result.insertId });
+        }
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        console.error('Ошибка сохранения проекта:', error);
+        res.status(500).json({ error: 'Ошибка сохранения проекта' });
     }
-  });
+});
   
   // Удаление проекта
   app.post('/api/projects/delete', async (req, res) => {
@@ -401,37 +407,51 @@ app.get('/api/projects', async (req, res) => {
 
   app.post('/api/projects/save', upload.array('images', 5), async (req, res) => {
     try {
-      const { id, title, description, year_design, year_implementation } = req.body;
-      const images = req.files?.map(file => `/uploads/${file.filename}`) || JSON.parse(req.body.existingImages || '[]');
-      
-      const connection = await pool.getConnection();
-      
-      if (id) {
-        await connection.execute(
-          'UPDATE projects SET title=?, description=?, year_design=?, year_implementation=?, images=? WHERE id=?',
-          [title, description, year_design, year_implementation, JSON.stringify(images), id]
-        );
-        console.log(`🔄 Проект "${title}" (ID: ${id}) обновлен.`);
-      } else {
-        const [result] = await connection.execute(
-          'INSERT INTO projects (title, description, year_design, year_implementation, images) VALUES (?, ?, ?, ?, ?)',
-          [title, description, year_design, year_implementation, JSON.stringify(images)]
-        );
-        console.log(`✅ Проект "${title}" (ID: ${result.insertId}) сохранен.`);
-      }
-      
-      connection.release();
-      res.json({ success: true });
+        const { id, title, description, year_design, year_implementation, existingImages } = req.body;
+        
+        let existingImagesArray = [];
+        try {
+            existingImagesArray = existingImages ? JSON.parse(existingImages) : [];
+        } catch (e) {
+            console.error('Ошибка парсинга existingImages:', e);
+        }
+        
+        const newImages = req.files?.map(file => {
+            if (!file.mimetype.startsWith('image/')) {
+              throw new Error('Файл должен быть изображением');
+            }
+            return `/uploads/${file.filename}`;
+          }) || [];
+        const allImages = [...existingImagesArray, ...newImages];
+        
+        const connection = await pool.getConnection();
+        
+        if (id) {
+            await connection.execute(
+                'UPDATE projects SET title=?, description=?, year_design=?, year_implementation=?, images=? WHERE id=?',
+                [title, description, year_design, year_implementation, JSON.stringify(allImages), id]
+            );
+            console.log(`Проект "${title}" (ID: ${id}) обновлен.`);
+        } else {
+            const [result] = await connection.execute(
+                'INSERT INTO projects (title, description, year_design, year_implementation, images) VALUES (?, ?, ?, ?, ?)',
+                [title, description, year_design, year_implementation, JSON.stringify(allImages)]
+            );
+            console.log(`Проект "${title}" (ID: ${result.insertId}) сохранен.`);
+        }
+        
+        connection.release();
+        res.json({ success: true });
     } catch (error) {
-      console.error('❌ Ошибка сохранения проекта:', error.message);
-      res.status(500).json({ error: error.message });
+        console.error('Ошибка сохранения проекта:', error.message);
+        res.status(500).json({ error: error.message });
     }
-  });
+});
 
 const PORT = process.env.PORT || 3000;
 
 checkDatabaseConnection().then(() => {
     app.listen(PORT, () => {
-        console.log(`\n🚀 Сервер запущен на порту ${PORT}`);
+        console.log(`\n Сервер запущен на порту ${PORT}`);
     });
 });

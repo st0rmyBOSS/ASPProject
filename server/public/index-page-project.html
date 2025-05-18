@@ -215,42 +215,10 @@
                 </div>
         </section>
 
-        <section class="projects-box" id="projectsContainer">
+        <section class="projects-box" id="dynamicProjects">
+            <h1 class="projects">Другие наши проекты</h1>
             <!-- Проекты будут загружаться здесь через JavaScript -->
         </section>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', async () => {
-              try {
-                const response = await fetch('http://localhost:3000/api/projects');
-                const projects = await response.json();
-                
-                const container = document.getElementById('projectsContainer');
-                container.innerHTML = '';
-                
-                projects.forEach((project, index) => {
-                  const animationClass = index % 2 === 0 ? 'slideInLeft' : 'slideInRight';
-                  
-                  const projectEl = document.createElement('div');
-                  projectEl.className = 'project-item';
-                  projectEl.setAttribute('data-animation', animationClass);
-                  projectEl.innerHTML = `
-                    <h2 class="project-name">${project.title}</h2>
-                    <p>Выполнение проектной документации – ${project.year_design || 'не указано'}</p>
-                    <p>Реализация – ${project.year_implementation || 'не указано'}</p>
-                    <p class="project-description">${project.description}</p>
-                    <div class="project-images">
-                      ${project.images ? JSON.parse(project.images).map(img => 
-                        `<img src="${img}" alt="${project.title}" class="project-image">`).join('') : ''}
-                    </div>
-                  `;
-                  container.appendChild(projectEl);
-                });
-              } catch (error) {
-                console.error('Ошибка загрузки проектов:', error);
-              }
-            });
-            </script>
 
     </main>
     <footer class="footer-projects">
@@ -288,7 +256,73 @@
 
     <script src="./assets/js/script.js"></script>
 
-    <script src="./assets/js/script-panel.js"></script>
+    <script src="./script-panel.js"></script>
+
+    <script>
+document.addEventListener('DOMContentLoaded', async () => {
+    console.log("Загрузка страницы проектов...");
+    
+    try {
+        const response = await fetch('http://localhost:3000/api/projects');
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        
+        const projects = await response.json();
+        console.log("Полученные проекты:", projects);
+        
+        const container = document.getElementById('dynamicProjects');
+        if (!container) return;
+        
+        container.innerHTML = '<h1 class="projects">Другие наши проекты</h1>';
+        
+        if (!Array.isArray(projects) || projects.length === 0) {
+            container.innerHTML += '<p>Нет добавленных проектов.</p>';
+            return;
+        }
+
+        projects.forEach((project, index) => {
+    const projectEl = document.createElement('div');
+    projectEl.className = 'project-item';
+    projectEl.setAttribute('data-animation', index % 2 === 0 ? 'slideInLeft' : 'slideInRight');
+    
+    projectEl.innerHTML = `
+        <h2 class="project-name">${project.title || 'Новый проект'}</h2>
+        ${project.year_design ? `<p>Выполнение проектной документации – ${project.year_design}</p>` : ''}
+        ${project.year_implementation ? `<p>Реализация – ${project.year_implementation}</p>` : ''}
+        <p class="project-description">${project.description || ''}</p>
+        <div class="project-images">
+            ${project.images && project.images.length > 0 ? 
+                project.images.map(img => 
+                    `<img src="${img}" alt="Изображение проекта" class="project-image" 
+                      style="max-width: 300px; height: auto; margin: 10px; border-radius: 5px;">`
+                ).join('') : 
+                '<p>Изображения отсутствуют</p>'}
+        </div>
+    `;
+    
+    container.appendChild(projectEl);
+});
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate', entry.target.dataset.animation);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.project-item').forEach(item => {
+            observer.observe(item);
+        });
+
+    } catch (error) {
+        console.error("Ошибка:", error);
+        const container = document.getElementById('dynamicProjects');
+        if (container) {
+            container.innerHTML = `<p class="error">Ошибка загрузки проектов: ${error.message}</p>`;
+        }
+    }
+});
+    </script>
 
 </body>
 </html>

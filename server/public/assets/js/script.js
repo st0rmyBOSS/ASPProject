@@ -79,7 +79,6 @@ function showMessage(type, text) {
 // Admin
 async function loadData() {
   try {
-      // Пробуем загрузить из MySQL
       const [mainRes, aboutRes, projectsRes, servicesRes] = await Promise.all([
           fetch('/api/data/main').then(res => res.json()),
           fetch('/api/data/about').then(res => res.json()),
@@ -87,7 +86,6 @@ async function loadData() {
           fetch('/api/data/services').then(res => res.json())
       ]);
 
-      // Если в MySQL нет данных, загружаем из JSON
       if (!mainRes || Object.keys(mainRes).length === 0) {
           const jsonRes = await fetch('/api/site-data.json').then(res => res.json());
           return jsonRes;
@@ -101,7 +99,6 @@ async function loadData() {
       };
   } catch (error) {
       console.error('Ошибка загрузки данных:', error);
-      // Если ошибка, пробуем загрузить из JSON
       try {
           const jsonRes = await fetch('/api/site-data.json').then(res => res.json());
           return jsonRes;
@@ -135,15 +132,80 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 //projects.html
 document.addEventListener('DOMContentLoaded', async () => {
+  console.log("DOM загружен, начинаю загрузку проектов...");
   const data = await loadData();
   if (data.projects) {
-      for (let i = 1; i <= 8; i++) {
-          const element = document.querySelector(`.project-text-${i}`);
-          if (element && data.projects[`text${i}`]) {
-              element.textContent = data.projects[`text${i}`];
-          }
-      }
+    document.querySelector('.project-text-1').textContent = data.projects.text1;
+    document.querySelector('.project-text-2').textContent = data.projects.text2;
+    document.querySelector('.project-text-3').textContent = data.projects.text3;
+    document.querySelector('.project-text-4').textContent = data.projects.text4;
+    document.querySelector('.project-text-5').textContent = data.projects.text5;
+    document.querySelector('.project-text-6').textContent = data.projects.text6;
+    document.querySelector('.project-text-7').textContent = data.projects.text7;
+    document.querySelector('.project-text-8').textContent = data.projects.text8;
   }
+
+  // Загрузка динамических проектов
+  try {
+    const response = await fetch('http://localhost:3000/api/projects');
+    console.log("Ответ сервера:", response);
+    if (!response.ok) throw new Error("Ошибка HTTP: " + response.status);
+    
+    const dynamicProjects = await response.json();
+    const container = document.getElementById('dynamicProjects');
+    
+    if (!container) {
+        console.error('Элемент #dynamicProjects не найден!');
+        return;
+    }
+
+    container.innerHTML = '';
+
+    if (dynamicProjects.length === 0) {
+        container.innerHTML = '<p>Нет добавленных проектов.</p>';
+        return;
+    }
+
+    dynamicProjects.forEach((project, index) => {
+        const animationClass = index % 2 === 0 ? 'slideInLeft' : 'slideInRight';
+        const images = project.images ? JSON.parse(project.images) : [];
+
+        const projectEl = document.createElement('div');
+        projectEl.className = 'project-item';
+        projectEl.setAttribute('data-animation', animationClass);
+        projectEl.innerHTML = `
+            <h2 class="project-name">${project.title || 'Без названия'}</h2>
+            ${project.year_design ? `<p>Выполнение проектной документации – ${project.year_design}</p>` : ''}
+            ${project.year_implementation ? `<p>Реализация – ${project.year_implementation}</p>` : ''}
+            <p class="project-description">${project.description || ''}</p>
+            <div class="project-images">
+                ${images.map(img => `<img src="${img}" alt="${project.title}" class="project-image">`).join('')}
+            </div>
+        `;
+        container.appendChild(projectEl);
+    });
+
+    // Инициализация анимации
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = 1;
+                entry.target.classList.add('animate', entry.target.dataset.animation);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('#dynamicProjects .project-item').forEach(el => {
+        observer.observe(el);
+    });
+
+} catch (error) {
+    console.error('Ошибка загрузки проектов:', error);
+    const container = document.getElementById('dynamicProjects');
+    if (container) {
+        container.innerHTML = `<p class="error">Не удалось загрузить проекты: ${error.message}</p>`;
+    }
+}
 });
 
 //services.html
@@ -156,37 +218,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
-//add projects
-document.addEventListener('DOMContentLoaded', async () => {
-    try {
-      const response = await fetch('/api/projects');
-      const projects = await response.json();
-      
-      const container = document.getElementById('projectsContainer');
-      container.innerHTML = '';
-      
-      projects.forEach((project, index) => {
-        const animationClass = index % 2 === 0 ? 'slideInLeft' : 'slideInRight';
-        
-        const projectEl = document.createElement('div');
-        projectEl.className = 'project-item';
-        projectEl.setAttribute('data-animation', animationClass);
-        projectEl.innerHTML = `
-          <h2 class="project-name">${project.title}</h2>
-          <p>Выполнение проектной документации – ${project.year_design}</p>
-          <p>Реализация – ${project.year_implementation}</p>
-          <p class="project-description">${project.description}</p>
-          <div class="project-images">
-            ${project.images ? JSON.parse(project.images).map(img => 
-              `<img src="${img}" alt="${project.title}">`).join('') : ''}
-          </div>
-        `;
-        container.appendChild(projectEl);
-      });
-    } catch (error) {
-      console.error('Ошибка загрузки проектов:', error);
-    }
-  });
+
 
 
 

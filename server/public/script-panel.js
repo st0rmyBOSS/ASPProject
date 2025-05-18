@@ -1,3 +1,80 @@
+document.addEventListener('DOMContentLoaded', async function() {
+    await loadAdminData();
+});
+
+async function loadAdminData() {
+    try {
+        const savedMainData = localStorage.getItem('mainPageData');
+        const savedAboutData = localStorage.getItem('aboutPageData');
+        const savedProjectsData = localStorage.getItem('projectsPageData');
+        const savedServicesData = localStorage.getItem('servicesPageData');
+        
+        if (savedMainData) {
+            const mainData = JSON.parse(savedMainData);
+            if (document.getElementById('company-info')) {
+                document.getElementById('company-info').value = mainData.companyInfo;
+            }
+            if (document.getElementById('services-info')) {
+                document.getElementById('services-info').value = mainData.servicesInfo;
+            }
+        }
+        
+        if (savedAboutData) {
+            const aboutData = JSON.parse(savedAboutData);
+            if (document.getElementById('about-text1')) document.getElementById('about-text1').value = aboutData.text1;
+            if (document.getElementById('about-text2')) document.getElementById('about-text2').value = aboutData.text2;
+            if (document.getElementById('about-text3')) document.getElementById('about-text3').value = aboutData.text3;
+            if (document.getElementById('about-text4')) document.getElementById('about-text4').value = aboutData.text4;
+        }
+        
+        if (savedProjectsData) {
+            const projectsData = JSON.parse(savedProjectsData);
+            for (let i = 1; i <= 8; i++) {
+                const element = document.getElementById(`project-text-${i}`);
+                if (element) element.value = projectsData[`text${i}`];
+            }
+        }
+        
+        if (savedServicesData) {
+            const servicesData = JSON.parse(savedServicesData);
+            if (document.getElementById('services-text-left')) document.getElementById('services-text-left').value = servicesData.textLeft;
+            if (document.getElementById('services-text-right')) document.getElementById('services-text-right').value = servicesData.textRight;
+            if (document.getElementById('services-list')) document.getElementById('services-list').value = servicesData.servicesList;
+        }
+        
+        if (!savedMainData || !savedAboutData || !savedProjectsData || !savedServicesData) {
+            const response = await fetch('http://localhost:3000/api/data');
+            const data = await response.json();
+            
+            if (data.main) {
+                if (document.getElementById('company-info')) document.getElementById('company-info').value = data.main.companyInfo;
+                if (document.getElementById('services-info')) document.getElementById('services-info').value = data.main.servicesInfo;
+            }
+            
+            if (data.about) {
+                if (document.getElementById('about-text1')) document.getElementById('about-text1').value = data.about.text1;
+                if (document.getElementById('about-text2')) document.getElementById('about-text2').value = data.about.text2;
+                if (document.getElementById('about-text3')) document.getElementById('about-text3').value = data.about.text3;
+                if (document.getElementById('about-text4')) document.getElementById('about-text4').value = data.about.text4;
+            }
+            
+            if (data.projects) {
+                for (let i = 1; i <= 8; i++) {
+                    const element = document.getElementById(`project-text-${i}`);
+                    if (element && data.projects[`text${i}`]) element.value = data.projects[`text${i}`];
+                }
+            }
+            
+            if (data.services) {
+                if (document.getElementById('services-text-left')) document.getElementById('services-text-left').value = data.services.textLeft;
+                if (document.getElementById('services-text-right')) document.getElementById('services-text-right').value = data.services.textRight;
+                if (document.getElementById('services-list')) document.getElementById('services-list').value = data.services.servicesList;
+            }
+        }
+    } catch (error) {
+        console.error('Ошибка загрузки данных:', error);
+    }
+}
 // Загрузка сохраненных данных главной страницы
 document.addEventListener('DOMContentLoaded', function() {
     const savedMainData = localStorage.getItem('mainPageData');
@@ -28,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Загрузка сохраненных данных страницы "Наши проекты"
 document.addEventListener('DOMContentLoaded', function() {
-    const savedProjectsData = localStorage.getItem('aboutProjectsData');
+    const savedProjectsData = localStorage.getItem('projectsPageData');
     if (savedProjectsData) {
         const projectsData = JSON.parse(savedProjectsData);
         
@@ -65,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Загрузка изменений в JSON
 async function saveDataToServer(dataType, data) {
     try {
-        const response = await fetch('http://localhost:3000/api/save', {
+        const response = await fetch('http://localhost:3000/api/save/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ [dataType]: data })
@@ -85,10 +162,8 @@ document.getElementById('saveMainBtn').addEventListener('click', async () => {
         servicesInfo: document.getElementById('services-info').value
     };
     
-    // Сохраняем в localStorage
     localStorage.setItem('mainPageData', JSON.stringify(mainData));
     
-    // Отправляем на сервер
     try {
         const response = await fetch('http://localhost:3000/api/save', {
             method: 'POST',
@@ -97,10 +172,10 @@ document.getElementById('saveMainBtn').addEventListener('click', async () => {
         });
         
         const result = await response.json();
-        alert(result.success ? '✅ Данные сохранены в БД и JSON!' : '❌ Ошибка сохранения!');
+        alert(result.success ? 'Данные сохранены в БД и JSON!' : '❌ Ошибка сохранения!');
     } catch (error) {
         console.error('Ошибка:', error);
-        alert('❌ Не удалось сохранить! Проверьте консоль.');
+        alert('Не удалось сохранить! Проверьте консоль.');
     }
 });
 
@@ -123,10 +198,10 @@ document.getElementById('saveAboutBtn').addEventListener('click', async () => {
         });
         
         const result = await response.json();
-        alert(result.success ? '✅ Данные сохранены!' : '❌ Ошибка!');
+        alert(result.success ? 'Данные сохранены!' : 'Ошибка!');
     } catch (error) {
         console.error('Ошибка:', error);
-        alert('❌ Не удалось отправить данные!');
+        alert('Не удалось отправить данные!');
     }
 });
 
@@ -143,7 +218,7 @@ document.getElementById('saveProjectsBtn').addEventListener('click', async () =>
         text8: document.getElementById('project-text-8').value
     };
     
-    localStorage.setItem('projectsData', JSON.stringify(projectsData));
+    localStorage.setItem('projectsPageData', JSON.stringify(projectsData));
     
     try {
         const response = await fetch('http://localhost:3000/api/save', {
@@ -153,10 +228,10 @@ document.getElementById('saveProjectsBtn').addEventListener('click', async () =>
         });
         
         const result = await response.json();
-        alert(result.success ? '✅ Проекты обновлены!' : '❌ Ошибка!');
+        alert(result.success ? 'Проекты обновлены!' : 'Ошибка!');
     } catch (error) {
         console.error('Ошибка:', error);
-        alert('❌ Не удалось сохранить проекты!');
+        alert('Не удалось сохранить проекты!');
     }
 });
 
@@ -178,10 +253,10 @@ document.getElementById('saveServicesBtn').addEventListener('click', async () =>
         });
         
         const result = await response.json();
-        alert(result.success ? '✅ Услуги обновлены!' : '❌ Ошибка!');
+        alert(result.success ? 'Услуги обновлены!' : 'Ошибка!');
     } catch (error) {
         console.error('Ошибка:', error);
-        alert('❌ Не удалось сохранить услуги!');
+        alert('Не удалось сохранить услуги!');
     }
 });
 
@@ -210,30 +285,48 @@ document.getElementById('projectImages').addEventListener('change', function() {
 
 // Загрузка проектов
 async function loadProjects() {
+    console.log("Загрузка проектов...");
     try {
         const response = await fetch('http://localhost:3000/api/projects');
+        if (!response.ok) {
+            throw new Error(`Ошибка сервера: ${response.status}`);
+        }
+        
         const projects = await response.json();
+        console.log("Полученные проекты:", projects);
         
         const container = document.getElementById('projectsList');
+        if (!container) {
+            throw new Error('Элемент projectsList не найден');
+        }
+        
         container.innerHTML = '';
         
+        if (!Array.isArray(projects)) {
+            throw new Error('Сервер вернул не массив проектов');
+        }
+
         projects.forEach(project => {
             const projectEl = document.createElement('div');
             projectEl.className = 'project-item';
             projectEl.innerHTML = `
-                <h4>${project.title}</h4>
-                <p>${project.description.substring(0, 100)}...</p>
+                <h4>${project.title || 'Без названия'}</h4>
+                <p>${project.description ? project.description.substring(0, 100) + '...' : ''}</p>
                 <button class="edit-btn" data-id="${project.id}">Редактировать</button>
             `;
             container.appendChild(projectEl);
             
             projectEl.querySelector('.edit-btn').addEventListener('click', (e) => {
                 e.stopPropagation();
-                openProjectEditor(project.id);
+                openProjectEditor(project);
             });
         });
     } catch (error) {
         console.error('Ошибка загрузки проектов:', error);
+        const container = document.getElementById('projectsList');
+        if (container) {
+            container.innerHTML = `<p class="error">Ошибка: ${error.message}</p>`;
+        }
     }
 }
 
@@ -290,38 +383,45 @@ function closeProjectEditor() {
 async function saveProject(e) {
     e.preventDefault();
     
+    const title = document.getElementById('projectTitle').value.trim();
+    if (!title) {
+        alert('Название проекта обязательно!');
+        return;
+    }
+
     const formData = new FormData();
     formData.append('id', document.getElementById('projectId').value);
-    formData.append('title', document.getElementById('projectTitle').value);
+    formData.append('title', title);
     formData.append('description', document.getElementById('projectDescription').value);
     formData.append('year_design', document.getElementById('projectYearDesign').value);
     formData.append('year_implementation', document.getElementById('projectYearImplementation').value);
     
-    // Существующие изображения
-    const existingImages = Array.from(document.querySelectorAll('input[name="existingImages"]')).map(i => i.value);
-    formData.append('existingImages', JSON.stringify(existingImages));
-    
-    // Новые изображения
-    const files = document.getElementById('projectImages').files;
-    for (let i = 0; i < files.length; i++) {
-      formData.append('images', files[i]);
-    }
-    
     try {
-      const response = await fetch('http://localhost:3000/api/projects/save', {
-        method: 'POST',
-        body: formData
-      });
-      
-      if (response.ok) {
-        console.log('✅ Проект успешно сохранен в БД!');
-        loadProjects(); // Обновляем список в админ-панели
+        const existingImages = Array.from(document.querySelectorAll('input[name="existingImages"]')).map(i => i.value);
+        formData.append('existingImages', JSON.stringify(existingImages));
+        
+        const files = document.getElementById('projectImages').files;
+        for (let i = 0; i < files.length; i++) {
+            formData.append('images', files[i]);
+        }
+        
+        const response = await fetch('http://localhost:3000/api/projects/save', {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (!response.ok) {
+            throw new Error(await response.text());
+        }
+        
+        alert('Проект успешно сохранен!');
+        loadProjects();
         closeProjectEditor();
-      }
     } catch (error) {
-      console.error('Ошибка сохранения проекта:', error);
+        console.error('Ошибка сохранения проекта:', error);
+        alert(`Ошибка сохранения: ${error.message}`);
     }
-  }
+}
 
 async function deleteProject() {
     if (confirm('Вы уверены, что хотите удалить этот проект?')) {
